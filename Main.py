@@ -116,7 +116,7 @@ def main():
          
             i = input(
                 (
-                    "Fim do exercício, digite 10 para refazer o exercício ou enter para voltar ao menu "
+                "Fim do exercício, digite 10 para refazer o exercício ou enter para voltar ao menu "
                 )
             )
             
