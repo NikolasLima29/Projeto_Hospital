@@ -62,65 +62,7 @@ def main():
                     "Fim do exercício, digite 5 para refazer o exercício ou enter para voltar ao menu "
                 )
             )
-            
-           
-        while i == "6":
-               
-               
-               i = input(
-                (
-                    "Fim do exercício, digite 6 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-           
-           
-        while i == "7":
-            
-               
-               i = input(
-                (
-                    "Fim do exercício, digite 7 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-               
-        while i == "8":
-             
-               
-               
-               print("___________________________________________")
-               i = input(
-                (
-                    "Fim do exercício, digite 8 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-               
-               
-               
-               
-               
-               
-               
-               
-        while i == "9":
-            
-               
-            i = input(
-                (
-                    "Fim do exercício, digite 9 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-        
-        
-        
-        while i == "10":
-         
-            i = input(
-                (
-                "Fim do exercício, digite 10 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-            
-            
+                     
 
         
                
