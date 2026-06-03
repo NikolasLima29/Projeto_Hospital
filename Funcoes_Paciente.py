@@ -3,6 +3,81 @@ import string
 
 def Limpar_Tela():
     os.system('cls' if os.name == 'nt' else 'clear')
+    
+    
+# Ordem: [CPF(0), Nome(1), Data de Nascimento(2), Sexo(3), Plano de Saúde(4), [E-mails](5), [Telefones](6)]
+# =========================== ARQUIVOS===================================================== 
+
+def Existe_Arquivo(nome):
+    import os
+    if os.path.exists(nome):
+        return True
+    else:
+        return False
+
+def Gravar_Dados_Arquivo_Pacientes(Pacientes):
+    arq = open("Pacientes.txt","w", encoding="utf-8")
+    for i in range(len(Pacientes)):
+            paciente = ""
+            fones = ""
+            email = ""
+            
+            # junta os telefones no arquivo
+            for qtd_tel in range(len(Pacientes[i][6])):
+                fones += Pacientes[i][6][qtd_tel]+"_"
+            # junta os emails no arquivo
+            for qtd_email in range(len(Pacientes[i][5])):
+                email += Pacientes[i][5][qtd_email]+"|"
+                
+                
+            paciente += Pacientes[i][0] + ";" + Pacientes[i][1] + ";" + Pacientes[i][2] + ";" + Pacientes[i][3] + ";" + Pacientes[i][4] + ";" + email + ";" + fones
+            
+            arq.write(paciente + "\n")
+    arq.close()
+    
+def Carregar_Dados_Arquivo_Pacientes(Pacientes):
+    if Existe_Arquivo("Pacientes.txt"):
+       
+        with open("Pacientes.txt", "r", encoding="utf-8") as arq:
+            for linha in arq:
+                linha = linha.strip()
+                partes = linha.split(";")
+                emails_brutos = partes[5].split("|")
+                telefones_brutos = partes[6].split("_")
+                
+                emails = []
+                for e in emails_brutos:
+                    email_limpo = e.strip()
+                    if email_limpo:
+                        emails.append(email_limpo)
+                
+                telefones = []
+                for t in telefones_brutos:
+                    telefone_limpo = t.strip()
+                    if telefone_limpo:
+                        telefones.append(telefone_limpo)
+                
+                # Criando a lista do paciente de forma mais direta e limpa
+                Paciente = [
+                    partes[0].strip(),  # CPF
+                    partes[1].strip(),  # Nome
+                    partes[2].strip(),  # Data de Nascimento
+                    partes[3].strip(),  # Sexo
+                    partes[4].strip(),  # Plano de Saúde
+                    emails,             # Lista de e-mails limpa
+                    telefones           # Lista de telefones limpa
+                ]
+                
+                # Insere o paciente na lista principal
+                Pacientes.append(Paciente)
+          
+          
+          
+            
+       
+           
+                     
+
 
 
 # =============================================== 1 - Listar todos pacientes =============================================
@@ -47,7 +122,7 @@ def Listar_Todos_Pacientes(Pacientes):
             print(f"│ {'':<81} │") 
             print(f"│ {'-- TELEFONES --':<81} │")
             for k in range(len(Pacientes[i][j])):
-                texto_tel = f"{k+1}° E-mail: {Pacientes[i][j][k]}"
+                texto_tel = f"{k+1}° Telefone: {Pacientes[i][j][k]}"
                 print(f"│ {texto_tel:<81} │")
             print("└" + "─"*83 + "┘\n") # Fecha o bloco de Contatos
             
@@ -65,7 +140,7 @@ def Formatar_CPF(CPF):
     return CPF
             
 # ============================== BLOCO 2: VALIDAR CPF =============================================
-def validar_e_obter_cpf(CPF):
+def Validar_e_Obter_CPF(CPF):
     # O .strip() limpa os espaços do CPF que veio do main
     CPF = CPF.strip()
     cpf_valido = False
@@ -97,7 +172,7 @@ def validar_e_obter_cpf(CPF):
   
 # =============================== BLOCO 3: LISTAR TODOS OS DADOS DE UM PACIENTE =============================================  
 def Listar_Todos_Dados_Paciente(Pacientes, indice):
-    print("___________________________________________________________________________________")
+    print("____________________________________________________________________________________")
     print()
     
     CPF =       Pacientes[indice][0]
@@ -230,29 +305,10 @@ def Listar_Dado_Especifico_Paciente(Pacientes, indice, dado):
 
 def Main_Funcoes_Pacientes():
 # Ordem: [CPF(0), Nome(1), Data de Nascimento(2), Sexo(3), Plano de Saúde(4), [E-mails](5), [Telefones](6)]
-    Pacientes = [
-    [
-        "123.456.789-10", 
-        "João Silva ", 
-        "15/04/1985", 
-        "M", 
-        "Unimed", 
-        ["joao.silva@email.com"], 
-        ["(16) 99999-1111"]
-    ],
-    [
-        "098.765.432-10", 
-        "Maria Oliveira", 
-        "22/10/1992", 
-        "F", 
-        "SulAmérica", 
-        ["maria.oliveira@email.com"], 
-        ["(16) 97777-3333"]
-    ]
-]
+    Pacientes = []
 
 
-    
+    Carregar_Dados_Arquivo_Pacientes(Pacientes)
     i = ""
     while i != "6":
         print("Escolha uma das opções:")
@@ -278,11 +334,13 @@ def Main_Funcoes_Pacientes():
             Limpar_Tela()
             
         while i == "2":
+            
+            # ==================================BUSCAR UM PACIENTE==================================
             Limpar_Tela()
            
             CPF = input("Digite o CPF do paciente que deseja visualizar: ").strip() 
             
-            CPF = validar_e_obter_cpf(CPF)
+            CPF = Validar_e_Obter_CPF(CPF)
                 
             CPF = Formatar_CPF(CPF)
             
@@ -295,7 +353,7 @@ def Main_Funcoes_Pacientes():
                     achou_paciente = True
                     indice_encontrado = i  
 
-            #Sub-menu para visualizar info sobre o paciente, se caso tiver encontrado o paciente
+            #Sub-menu para visualizar info sobre o paciente
             if achou_paciente:
                 
                 Nome_Paciente = Pacientes[indice_encontrado][1]
@@ -310,15 +368,14 @@ def Main_Funcoes_Pacientes():
                     print("2 - Listar um paciente")
                     print("3 - Sair deste menu") 
                     
-                    # Lendo puramente como texto (sem int e com o .strip() para limpar espaços bônus)
+                    
                     j = input("Digite sua escolha : ").strip()
                     
-                    while j == "1": # Mudou para string
+                    while j == "1": 
                         Limpar_Tela()
                         Listar_Todos_Dados_Paciente(Pacientes, indice_encontrado)
                         
-                        # Quando você der Enter aqui, j vai virar "" (vazio). 
-                        # Como "" é diferente de "1", o loop fecha perfeitamente!
+                        
                         j = input("Pressione enter para voltar...") 
                         Limpar_Tela()
                         
@@ -340,7 +397,7 @@ def Main_Funcoes_Pacientes():
                   
                     if j != "1" and j != "2" and j != "3" and j != "":
                         print("Opção inválida. Digite um número entre 1 e 3.")
-                        # Limpar_Tela()
+                        
                         
                         
                         
@@ -382,5 +439,6 @@ def Main_Funcoes_Pacientes():
                     "Fim do exercício, digite 5 para refazer o exercício ou enter para voltar ao menu "
                 )
             )
+    Gravar_Dados_Arquivo_Pacientes(Pacientes)
 
 Main_Funcoes_Pacientes()

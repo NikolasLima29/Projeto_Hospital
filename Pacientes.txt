@@ -1,0 +1,2 @@
+123.456.789-10;João Silva;15/04/1985;M;Unimed;joao.silva@email.com|;(16) 99999-1111_(30) 98765-4321_
+098.765.432-10;Maria Oliveira;22/10/1992;F;SulAmérica;maria.oliveira@email.com|Maria.oliv2007@gmail.com|;(16) 97777-3333_
