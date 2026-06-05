@@ -2,10 +2,10 @@ import string
             
         
     
-   
+
     
-         
-          
+        
+        
         
     
     
@@ -19,7 +19,7 @@ def main():
         print("5- sair")
         i = input("Digite sua escolha: ")
         while i == "1":
-           
+        
 
             i = input(
                 (
@@ -27,7 +27,7 @@ def main():
                 )
             )
         while i == "2":
-          
+        
                 
             i = input(
                 (
@@ -37,8 +37,8 @@ def main():
         
         while i == "3":
             
-               
-               
+            
+            
             i = input(
                 (
                     "Fim do exercício, digite 3 para refazer o exercício ou enter para voltar ao menu "
@@ -46,7 +46,7 @@ def main():
             )
             
         while i == "4":
-           
+        
             
             i = input(
                 (
@@ -55,17 +55,17 @@ def main():
             )
             
         while i == "5":
-               
-               
-               i = input(
+            
+            
+            i = input(
                 (
                     "Fim do exercício, digite 5 para refazer o exercício ou enter para voltar ao menu "
                 )
             )
-                     
+                    
 
         
-               
+            
         # if not i == "":
         #     print("/////////////// ERRO ///////////////////")
         #     print("Digite novamente, escolha apenas entre 1 a 5")
