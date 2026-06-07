@@ -346,6 +346,7 @@ def Main_Funcoes_Pacientes():
             
             achou_paciente = False
             indice_encontrado = -1
+            j = "" #váriavel p/ escolher a opção dentro de listar um
 
             # Loop p/ descobrir quem é o paciente
             for i in range(len(Pacientes)):
@@ -358,7 +359,7 @@ def Main_Funcoes_Pacientes():
                 
                 Nome_Paciente = Pacientes[indice_encontrado][1]
                 
-                j = ""
+                
                 
                 print(f"\nPaciente {Nome_Paciente} encontrado/a!")
                 
@@ -404,9 +405,13 @@ def Main_Funcoes_Pacientes():
                     
             else:
                 print("Paciente não encontrado no sistema.")
+                j = input("Pressione enter para voltar...") 
+                
            
-            if j == 1 or j == 2 or j == 3: 
-                i = 1
+            if j == "1" or j == "2" or j == "3": 
+                i = "1"
+            else:
+                i = "1"
                 
           
             Limpar_Tela()
