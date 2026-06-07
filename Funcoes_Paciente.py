@@ -9,7 +9,6 @@ def Limpar_Tela():
 # =========================== ARQUIVOS===================================================== 
 
 def Existe_Arquivo(nome):
-    import os
     if os.path.exists(nome):
         return True
     else:
@@ -139,9 +138,11 @@ def Formatar_CPF(CPF):
     CPF = CPF[0:3]+"."+CPF[3:6]+"."+CPF[6:9]+"-"+CPF[9:12]  
     return CPF
             
-# ============================== BLOCO 2: VALIDAR CPF =============================================
-def Validar_e_Obter_CPF(CPF):
-    # O .strip() limpa os espaços do CPF que veio do main
+# ============================== BLOCO 2: VALIDAR CPF e BUSCAR PACIENTE =============================================
+# ================================BLOCO 2.1 VALIDAR CPF ======================================
+def Validar_e_Obter_CPF():
+    
+    CPF = input("Digite o CPF do paciente: ")
     CPF = CPF.strip()
     cpf_valido = False
     
@@ -170,6 +171,23 @@ def Validar_e_Obter_CPF(CPF):
             
     return CPF
   
+# ============================= BLOCO 2.2 BUSCAR PACIENTE ========================================
+def Buscar_Paciente(Pacientes,CPF):
+
+
+    for i in range(len(Pacientes)):
+                    if Pacientes[i][0] == CPF:  
+                       return True, i
+    else:
+        return False, None
+    
+
+
+
+
+
+
+
 # =============================== BLOCO 3: LISTAR TODOS OS DADOS DE UM PACIENTE =============================================  
 def Listar_Todos_Dados_Paciente(Pacientes, indice):
     print("____________________________________________________________________________________")
@@ -295,8 +313,434 @@ def Listar_Dado_Especifico_Paciente(Pacientes, indice, dado):
     input("\nPressione Enter para continuar... ")
     Limpar_Tela()
     return "2"
-     
 
+# ========================== BLOCO 5: INSERIR UM NOVO PACIENTE ==================================
+
+
+def Verificar_CPF_Ja_Existe(Pacientes):
+    
+    CPF_Duplicado = True
+    
+    while CPF_Duplicado:
+        
+        CPF = Validar_e_Obter_CPF()
+                
+        CPF = Formatar_CPF(CPF)
+        achou = False
+        i = 0
+        while i < (len(Pacientes)) and not achou:
+            
+            if Pacientes[i][0] == CPF:
+                print("Este CPF Já está cadastrado! Digite novamente...") 
+                print() 
+                CPF_Duplicado = True
+                achou = True
+            else:
+                CPF_Duplicado = False
+            i +=1
+        
+        
+    if not CPF_Duplicado:
+        return CPF
+                 
+    
+        
+        
+            
+                
+   
+    
+            
+
+def Incluir_Novo_Paciente(Pacientes):
+    Paciente = []    
+    
+    # Variáveis de apoio para as validações manuais
+    Digitos = "0123456789"
+    Letras = "abcdefghijklmnopqrstuvwxyzçàãâáéêíôõóúü- "
+
+
+    # Validação do CRM
+   
+    print("3 - Inserir um novo paciente:")
+    print()
+    print("-------------------------CPF-----------------------------")
+    
+    
+    CPF = Verificar_CPF_Ja_Existe(Pacientes)
+   
+    
+    
+    
+
+    Paciente.append(CPF)
+
+
+    # Validação do nome
+    print()
+    print("-------------------------Nome----------------------------")
+    Nome_Valido = False
+    while not Nome_Valido:
+        Nome = input("Digite o nome do paciente: ")
+        Nome = Nome.lower()
+        
+        if len(Nome) == 0:
+            print("Nome inválido! O nome não pode estar vazio!")
+            print()
+        else:
+            Caractere_Invalido = False
+            So_Espaco = True
+            
+            # Checa caractere por caractere se tem número ou se é apenas espaço em branco
+            for i in range(len(Nome)):
+                if Nome[i] not in Letras:
+                    Caractere_Invalido = True
+                if Nome[i] != " ":
+                    So_Espaco = False
+
+            if Caractere_Invalido:
+                print("Nome inválido! Use apenas letras e espaços.")
+                print()
+            elif So_Espaco:
+                print("Nome Inválido! O nome não pode ser composto apenas por espaços!")
+                print()
+            else:
+                Nome_Valido = True
+
+    # Padroniza a formatação do nome (Tira espaços extras e deixa iniciais maiúsculas)
+    Nome = Nome.title()
+    Nome_sem_espacos = Nome.replace(" ", "")
+    Nome_formatado = ""
+
+    for i in range(len(Nome_sem_espacos)):
+        letra = Nome_sem_espacos[i]
+        if letra.isupper() and i > 0:
+            Nome_formatado += " " + letra
+        else:
+            Nome_formatado += letra
+
+    Nome = Nome_formatado
+    Paciente.append(Nome)
+
+
+    # Variáveis para montar a data no final
+    Data_De_Nascimento = ""
+    Dia_De_Nascimento = ""
+    Mes_De_Nascimento = ""
+    Ano_De_Nascimento = ""
+
+
+    # Validação do dia
+    
+    print()
+    print("-------------------------Data de Nascimento----------------------------")
+    Dia_Valido = False
+    while not Dia_Valido:
+        Dia_De_Nascimento = input("Digite o dia de nascimento do paciente (1 a 31): ")
+        
+        if len(Dia_De_Nascimento) < 1 or len(Dia_De_Nascimento) > 2:
+            print("Dia inválido! O dia deve conter 1 ou 2 dígitos!")
+            print()
+        else:
+            Tem_Letra = False
+            for i in range(len(Dia_De_Nascimento)):
+                if Dia_De_Nascimento[i] not in Digitos:
+                    Tem_Letra = True
+
+            if Tem_Letra:
+                print("Dia inválido! Contém letras e só pode ter números!")
+                print()
+            else:
+                # Converte pra int pra checar o limite do mês e volta pra string depois
+                Dia_De_Nascimento = int(Dia_De_Nascimento)
+                if Dia_De_Nascimento < 1 or Dia_De_Nascimento > 31:
+                    print("Dia inválido! Os dias vão de 1 a 31!")
+                    print()
+                else:
+                    Dia_De_Nascimento = str(Dia_De_Nascimento)
+                    Dia_Valido = True
+
+    # Adiciona o zero na frente se o dia tiver um dígito só
+    if len(Dia_De_Nascimento) == 1:
+        Dia_De_Nascimento = "0" + Dia_De_Nascimento
+
+
+    # Validação do mês
+   
+    
+    Mes_Valido = False
+    while not Mes_Valido:
+        Mes_De_Nascimento = input("Digite o mês de nascimento do paciente (1 a 12): ")
+        
+        if len(Mes_De_Nascimento) < 1 or len(Mes_De_Nascimento) > 2:
+            print("Mês inválido! O mês deve conter 1 ou 2 dígitos!")
+            print()
+        else:
+            Tem_Letra = False
+            for i in range(len(Mes_De_Nascimento)):
+                if Mes_De_Nascimento[i] not in Digitos:
+                    Tem_Letra = True
+
+            if Tem_Letra:
+                print("Mês inválido! Contém letras e só pode ter números!")
+                print()
+            else:
+                Mes_De_Nascimento = int(Mes_De_Nascimento)
+                if Mes_De_Nascimento < 1 or Mes_De_Nascimento > 12:
+                    print("Mês inválido! Os meses vão de 1 a 12!")
+                    print()
+                else:
+                    Mes_De_Nascimento = str(Mes_De_Nascimento)
+                    Mes_Valido = True  
+
+    if len(Mes_De_Nascimento) == 1:
+        Mes_De_Nascimento = "0" + Mes_De_Nascimento
+
+
+    # Validação do ano
+    
+    Ano_Valido = False
+    while not Ano_Valido:
+        Ano_De_Nascimento = input("Digite o ano de nascimento do paciente (acima de 1900): ")
+        
+        # Garante que o ano terá apenas 4 dígitos
+        if len(Ano_De_Nascimento) != 4:
+            print("Ano inválido! O ano deve conter exatamente 4 dígitos!")
+            print()
+        else:
+            Tem_Letra = False
+            for i in range(len(Ano_De_Nascimento)):
+                if Ano_De_Nascimento[i] not in Digitos:
+                    Tem_Letra = True
+
+            if Tem_Letra:
+                print("Ano inválido! Contém letras e só pode ter números!")
+                print()
+            else:
+                Ano_De_Nascimento = int(Ano_De_Nascimento)
+                if Ano_De_Nascimento < 1900:
+                    print("Ano inválido! Digite um ano acima de 1900!")
+                    print()
+                else:
+                    Ano_De_Nascimento = str(Ano_De_Nascimento)
+                    Ano_Valido = True    
+
+    # Concatena a data completa e joga na lista
+    Data_De_Nascimento = Dia_De_Nascimento + "/" + Mes_De_Nascimento + "/" + Ano_De_Nascimento
+    Paciente.append(Data_De_Nascimento)
+
+
+    # Validação do sexo
+
+    print()
+    print("-------------------------Sexo----------------------------")
+    Sexo_Valido = False
+    while not Sexo_Valido:
+        Sexo_Do_Paciente = input("Digite o sexo do paciente (M para masculino ou F para feminino): ")
+        Sexo_Do_Paciente = Sexo_Do_Paciente.upper()
+        
+        # Aceita apenas M ou F
+        if Sexo_Do_Paciente != "M" and Sexo_Do_Paciente != "F":
+            print("Sexo inválido! O sexo deve ser apenas M ou F!")
+            print()
+        else:
+            Sexo_Valido = True
+
+    Paciente.append(Sexo_Do_Paciente)
+
+
+    # Validação da Plano_Saude
+   
+    print()
+    print("-------------------------Plano de Saúde----------------------------")
+    Plano_Saude_Valida = False
+    while not Plano_Saude_Valida:
+        Plano_Saude = input("Digite o Plano de Saúde do paciente: ")
+        Plano_Saude = Plano_Saude.lower()
+        
+        if len(Plano_Saude) == 0:
+            print("Plano de Saúde inválido O Plano de Saúde não pode estar vazia!")
+            print()
+        else:
+            Caractere_Invalido = False
+            So_Espaco = True
+
+            for i in range(len(Plano_Saude)):
+                if Plano_Saude[i] not in Letras:
+                    Caractere_Invalido = True
+                if Plano_Saude[i] != " ":
+                    So_Espaco = False
+                    
+            if Caractere_Invalido:
+                print("Plano de Saúde Inválido! Use apenas letras e espaços.")
+                print()
+            elif So_Espaco:
+                print("Plano de Saúde Inválida! o Plano de Saúde não pode ser composto apenas por espaços!")
+                print()
+            else:
+                Plano_Saude_Valida = True
+
+    Plano_Saude = Plano_Saude.title()
+    Plano_Saude_sem_espacos = Plano_Saude.replace(" ", "")
+    Plano_Saude_formatada = ""
+
+    for i in range(len(Plano_Saude_sem_espacos)):
+        letra = Plano_Saude_sem_espacos[i]
+        if letra.isupper() and i > 0:
+            Plano_Saude_formatada += " " + letra
+        else:
+            Plano_Saude_formatada += letra
+            
+    Plano_Saude = Plano_Saude_formatada
+    Paciente.append(Plano_Saude)
+
+
+    # Validação dos Emails
+    
+    print()
+    print("-------------------------Emails----------------------------")
+    Emails_Do_Paciente = []
+    Continuar_Email = True
+    
+    while Continuar_Email:
+        Email_Valido = False
+        while not Email_Valido:
+            Email = input("Digite o e-mail do paciente: ")
+            Email = Email.lower()
+
+            Tem_Espaco = False
+            Qtd_Arroba = 0
+
+            # Conta os arrobas e verifica se tem espaços
+            for i in range(len(Email)):
+                if Email[i] == " ":
+                    Tem_Espaco = True
+                if Email[i] == "@":
+                    Qtd_Arroba += 1
+
+            if Tem_Espaco:
+                print("E-mail inválido! O e-mail não pode conter espaços.")
+                print()
+            elif Qtd_Arroba != 1:
+                print("E-mail inválido! O e-mail deve conter exatamente um @")
+                print()
+            else:
+                # Quebra a string no '@' para validar o nome e o domínio separadamente
+                Partes = Email.split("@")
+                Usuario = Partes[0]
+                Dominio = Partes[1]
+
+                Qtd_Ponto_Dominio = 0
+                for i in range(len(Dominio)):
+                    if Dominio[i] == ".":
+                        Qtd_Ponto_Dominio += 1
+
+                if len(Usuario) < 1:
+                    print("E-mail inválido! Deve conter letras ou números antes do @")
+                    print()
+                elif Qtd_Ponto_Dominio < 1:
+                    print("E-mail inválido! O domínio deve conter pelo menos um ponto.")
+                    print()
+                else:
+                    # Verifica se as partes entre os pontos do domínio não estão vazias
+                    Partes_Dominio = Dominio.split(".")
+                    Dominio_Valido = True
+                    
+                    for parte in Partes_Dominio:
+                        if len(parte) == 0:
+                            Dominio_Valido = False
+
+                    if not Dominio_Valido:
+                        print("E-mail inválido! Formato incorreto (exemplo válido: a@a.a)")
+                    else:
+                        Email_Valido = True
+                        Emails_Do_Paciente.append(Email)
+                        print("E-mail adicionado com sucesso!")
+                        print()
+
+        # Loop para adicionar mais e-mails caso necessário
+        Opcao_Valida = False
+        while not Opcao_Valida:
+            Opcao = input("Deseja adicionar mais um e-mail? (S para Sim / N para Não): ")
+            Opcao = Opcao.upper()
+            
+            if Opcao == "S":
+                Opcao_Valida = True
+            elif Opcao == "N":
+                Opcao_Valida = True
+                Continuar_Email = False
+            else:
+                print("Opção inválida! Digite apenas S ou N.")
+                print()
+
+    Paciente.append(Emails_Do_Paciente)
+
+
+    # Validação dos Telefones
+   
+    print()
+    print("-------------------------TelefoneS----------------------------")
+    Telefones_Do_Paciente = []
+    Continuar_Telefone = True
+    
+    while Continuar_Telefone:
+        Telefone_Valido = False
+        while not Telefone_Valido:
+            Telefone = input("Digite o telefone do paciente com DDD (apenas números, 10 ou 11 dígitos): ")
+            
+            # Limita a 10 (fixo com DDD) ou 11 (celular com DDD) números
+            if len(Telefone) < 10 or len(Telefone) > 11:
+                print("Telefone inválido! Deve conter 10 ou 11 números (incluindo o DDD).")
+                print()
+            else:
+                Tem_Letra = False
+                # Garante que não digitaram letras ou símbolos especiais
+                for i in range(len(Telefone)):
+                    if Telefone[i] not in Digitos:
+                        Tem_Letra = True
+
+                if Tem_Letra:
+                    print("Telefone inválido! Digite apenas números.")
+                    print()
+                else:
+                    # Formatação: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
+                    DDD = Telefone[0:2] # Pega os dois primeiros números
+                    
+                    if len(Telefone) == 10:
+                        # Separa o número fixo (4 dígitos + 4 dígitos)
+                        Numero_Parte1 = Telefone[2:6]
+                        Numero_Parte2 = Telefone[6:10]
+                    else:
+                        # Separa o número celular (5 dígitos + 4 dígitos)
+                        Numero_Parte1 = Telefone[2:7]
+                        Numero_Parte2 = Telefone[7:11]
+                        
+                    # Junta tudo no formato final
+                    Telefone_Formatado = "(" + DDD + ") " + Numero_Parte1 + "-" + Numero_Parte2
+                    
+                    Telefone_Valido = True
+                    Telefones_Do_Paciente.append(Telefone_Formatado)
+                    print("Telefone adicionado com sucesso:", Telefone_Formatado)
+                    print()
+
+        # Loop para perguntar se quer adicionar mais um
+        Opcao_Valida = False
+        while not Opcao_Valida:
+            Opcao = input("Deseja adicionar mais um telefone? (S para Sim / N para Não): ")
+            Opcao = Opcao.upper()
+            
+            if Opcao == "S":
+                Opcao_Valida = True
+            elif Opcao == "N":
+                Opcao_Valida = True
+                Continuar_Telefone = False
+            else:
+                print("Opção inválida! Digite apenas S ou N.")
+                print()
+
+    Paciente.append(Telefones_Do_Paciente)
+
+    return Paciente
 
 
 
@@ -314,7 +758,7 @@ def Main_Funcoes_Pacientes():
         print("Escolha uma das opções:")
         print("1 - Listar todos pacientes")
         print("2 - Listar um paciente")
-        print("3 - Inserir paciente")
+        print("3 - Inserir um novo paciente")
         print("4 - Alterar")
         print("5 - Excluir")
         print("6 - Sair")
@@ -338,21 +782,16 @@ def Main_Funcoes_Pacientes():
             # ==================================BUSCAR UM PACIENTE==================================
             Limpar_Tela()
            
-            CPF = input("Digite o CPF do paciente que deseja visualizar: ").strip() 
-            
-            CPF = Validar_e_Obter_CPF(CPF)
+            print("--------Busca de Pacientes--------")
+            CPF = Validar_e_Obter_CPF()
                 
             CPF = Formatar_CPF(CPF)
-            
-            achou_paciente = False
-            indice_encontrado = -1
+
+
             j = "" #váriavel p/ escolher a opção dentro de listar um
 
-            # Loop p/ descobrir quem é o paciente
-            for i in range(len(Pacientes)):
-                if Pacientes[i][0] == CPF:  
-                    achou_paciente = True
-                    indice_encontrado = i  
+                    
+            achou_paciente, indice_encontrado = Buscar_Paciente(Pacientes,CPF)
 
             #Sub-menu para visualizar info sobre o paciente
             if achou_paciente:
@@ -419,7 +858,8 @@ def Main_Funcoes_Pacientes():
         
         while i == "3":
             
-               
+            Pacientes.append(Incluir_Novo_Paciente(Pacientes))
+            Limpar_Tela()
                
             i = input(
                 (
