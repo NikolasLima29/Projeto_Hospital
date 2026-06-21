@@ -63,7 +63,7 @@ def Carregar_Dados_Arquivo_Medicos(Medicos):
                     telefones           # Lista de telefones limpa
                 ]
                 
-                # Insere o paciente na lista principal
+                # Insere o médico na lista principal
                 Medicos.append(Medico)
 
 # =============================================== OUTRAS FUNÇÕES =============================================== #
@@ -774,48 +774,34 @@ def Main_Funcoes_Medico(Medicos):
         print("5 - Excluir")
         print("6 - sair")
         print()
-
         i = input("Digite sua escolha: ")
-
-        while i == "1":
+        if i == "1":
             Limpar_Tela()
-            print("LISTA - PACIENTES")
+            print("LISTA - MÉDICOS")
             Listar_Todos_Medicos(Medicos)
-            i = input("Fim da lista, digite 1 para rever a lista de todos os pacientes ou enter para voltar ao menu: ")
-
-        while i == "2":
-            # ==================================BUSCAR UM PACIENTE==================================
+            i = input("Fim da lista! Pressione ENTER para voltar ao submenu de médicos: ")
+        elif i == "2":
             Limpar_Tela()
-        
-            print("--------Busca de Pacientes--------")
+            print("--------Busca de Médicos--------")
             CRM = Validar_CRM(Medicos)
-
             j = "" #váriavel p/ escolher a opção dentro de listar um
-                    
             achou_medico, indice_encontrado = Buscar_Medico(Medicos, CRM)
-
-            #Sub-menu para visualizar info sobre o paciente
+            #Sub-menu para visualizar info sobre o médico
             if achou_medico:
-                
                 Nome_Medico = Medicos[indice_encontrado][1]
-                
                 print(f"\nMédico {Nome_Medico} encontrado(a)!")
-                
                 while j != "3": # Mudou para string
                     Limpar_Tela()
                     print("\nEscolha uma das opções:")
                     print(f"1 - Listar todos os dados de {Nome_Medico}")
                     print("2 - Listar uma informação do médico")
                     print("3 - Sair deste menu") 
-                    
                     j = input("Digite sua escolha : ").strip()
-                    
                     while j == "1": 
                         Limpar_Tela()
                         Listar_Todos_Dados_Medico(Medicos, indice_encontrado)                       
                         j = input("Pressione enter para voltar...") 
                         Limpar_Tela()
-                        
                     while j == "2":
                         Limpar_Tela()
                         print(f"\nEscolha um dos dados de {Nome_Medico} que gostaria de vizualizar :")
@@ -830,25 +816,21 @@ def Main_Funcoes_Medico(Medicos):
                         print("9 - Sair deste menu") 
                         k = input("Digite sua escolha : ")                       
                         j = Listar_Dado_Especifico_Medico(Medicos, indice_encontrado, k)             
-
             else:
                 print("Médico não encontrado no sistema.")
-                j = input("Pressione enter para voltar...") 
-                
-            i = ""
-        
-
-
-
-
-
-
-        while i == "3":
+            i = input("Pressione ENTER para voltar ao submenu de médicos:")
+        elif i == "3":
             Medicos.append(Incluir_Novo_Medico(Medicos))
             Limpar_Tela()
-            i = input("Cadastro do médico realizado com sucesso! digite 3 para fazer outro cadastro de um médico ou enter para voltar ao menu: ")
-            
-        if i == "6":
+            i = input("Cadastro do médico realizado com sucesso! dPressione ENTER para voltar ao submenu de médicos: ")
+        elif i == "4":
+            Limpar_Tela()
+            i = input("Cadastro do médico realizado com sucesso! dPressione ENTER para voltar ao submenu de médicos: ")
+        elif i == "5":
+            Limpar_Tela()
+            i = input("Cadastro do médico realizado com sucesso! dPressione ENTER para voltar ao submenu de médicos: ") 
+        elif i == "6":
+            Limpar_Tela()
             Gravar_Dados_Arquivo_Medicos(Medicos)
             a = input("Pressione ENTER para voltar ao menu principal:")
         else:

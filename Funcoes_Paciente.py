@@ -1295,6 +1295,7 @@ def Main_Funcoes_Pacientes(Pacientes):
 
     i = ""
     while i != "6":
+        Limpar_Tela()
         print("Escolha uma das opções:")
         print("1 - Listar todos pacientes")
         print("2 - Listar um paciente")
@@ -1471,7 +1472,8 @@ def Main_Funcoes_Pacientes(Pacientes):
                 )
             )
             
-        if i == "5":
+        if i == "6":
+            Limpar_Tela()
             Gravar_Dados_Arquivo_Pacientes(Pacientes)
             a = input("Pressione ENTER para voltar ao menu principal:")
         else:
