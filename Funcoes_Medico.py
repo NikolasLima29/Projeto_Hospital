@@ -1,8 +1,304 @@
 import os
 
+# =============================================== ARQUIVOS =============================================== #
+
+def Existe_Arquivo(nome):
+    if os.path.exists(nome):
+        return True
+    else:
+        return False
+    
+def Gravar_Dados_Arquivo_Medicos(Medicos):
+    arq = open("Medicos.txt","w", encoding="utf-8")
+    for i in range(len(Medicos)):
+            medico = ""
+            Fones = ""
+            Email = ""
+            
+            # junta os emails no arquivo
+            for qtd_email in range(len(Medicos[i][6])):
+                Email += Medicos[i][6][qtd_email]+"|"
+                # junta os telefones no arquivo
+            for qtd_tel in range(len(Medicos[i][7])):
+                Fones += Medicos[i][7][qtd_tel]+"_"
+                
+            # Ordem: Médico = [CRM (0), Nome (1), Data de Nascimento (2), Sexo (3), Especialidade (4), Universidade em que se formou (5), E-mails (6), Telefones (7)]
+
+            medico += Medicos[i][0] + ";" + Medicos[i][1] + ";" + Medicos[i][2] + ";" + Medicos[i][3] + ";" + Medicos[i][4] + ";" + Medicos[i][5] + ";" + Email + ";" + Fones
+            
+            arq.write(medico + "\n")
+    arq.close()
+
+def Carregar_Dados_Arquivo_Medicos(Medicos):
+    if Existe_Arquivo("Medicos.txt"):
+       
+        with open("Medicos.txt", "r", encoding="utf-8") as arq:
+            for linha in arq:
+                linha = linha.strip()
+                partes = linha.split(";")
+                emails_brutos = partes[6].split("|")
+                telefones_brutos = partes[7].split("_")
+                
+                emails = []
+                for e in emails_brutos:
+                    email_limpo = e.strip()
+                    if email_limpo:
+                        emails.append(email_limpo)
+                
+                telefones = []
+                for t in telefones_brutos:
+                    telefone_limpo = t.strip()
+                    if telefone_limpo:
+                        telefones.append(telefone_limpo)
+                
+                # Criando a lista do Medico de forma mais direta e limpa
+                Medico = [
+                    partes[0].strip(),  # CRM
+                    partes[1].strip(),  # Nome
+                    partes[2].strip(),  # Data de Nascimento
+                    partes[3].strip(),  # Sexo
+                    partes[4].strip(),  # Especialidade
+                    partes[5].strip(),  # Universidade em que se formou
+                    emails,             # Lista de e-mails limpa
+                    telefones           # Lista de telefones limpa
+                ]
+                
+                # Insere o paciente na lista principal
+                Medicos.append(Medico)
+
+# =============================================== OUTRAS FUNÇÕES =============================================== #
+
 def Limpar_Tela():
     # Limpa o terminal independente do sistema operacional (Windows ou Linux/Mac)
     os.system('cls' if os.name == 'nt' else 'clear')
+
+def CRM_Duplicado(Medicos, CRM):
+
+    CRM_Duplicado = False
+    for medico_cadastrado in Medicos:
+        # O CRM é sempre o primeiro item (índice 0) da lista do médico
+        if medico_cadastrado[0] == CRM:
+            return True
+        
+# =============================================== 1 - LISTAR TODOS MÉDICOS =============================================== #
+
+def Listar_Todos_Medicos(Medicos):
+  for i in range(len(Medicos)):
+    print("____________________________________________________________________________________")
+    print()
+# Ordem: Médico = [CRM (0), Nome (1), Data de Nascimento (2), Sexo (3), Especialidade (4), Universidade em que se formou (5), E-mails (6), Telefones (7)]
+        
+    for j in range(len(Medicos[i])):
+        
+        # ==================== BLOCO 1: INFORMAÇÕES GERAIS ==================== #
+        if j == 0: # CRM
+            print(f"MÉDICO 0{1+i} - {Medicos[i][1]}")
+            # 83 traços + 2 cantos = 85 de largura total
+            print("┌" + "─"*32 + " INFO. GERAIS " + "─"*37 + "┐")
+            print(f"│ CRM: {Medicos[i][j]:<76} │")
+            
+        if j == 1: # NOME
+            print(f"│ Nome: {Medicos[i][j]:<75} │")
+            
+        if j == 2: # Data_Nascimento
+            print(f"│ Data de Nascimento: {Medicos[i][j]:<61} │")
+            
+        if j == 3: # Sexo
+            print(f"│ Sexo: {Medicos[i][j]:<75} │")
+            
+        if j == 4: # Especialidade
+            print(f"│ Especialidade: {Medicos[i][j]:<66} │")
+
+        if j == 5: # Universidade em que se formou
+            print(f"│ Universidade em que se formou: {Medicos[i][j]:<50} │")
+            print("└" + "─"*83 + "┘\n") # Fecha o bloco de Info Gerais
+
+
+        # ==================== BLOCO 2: CONTATOS ==================== #
+        if j == 6: # Email
+            print("┌" + "─"*35 + " CONTATOS " + "─"*38 + "┐")
+            print(f"│ {'-- E-MAILS --':<81} │")
+            for k in range(len(Medicos[i][j])):
+                texto_email = f"{k+1}° Email: {Medicos[i][j][k]}"
+                print(f"│ {texto_email:<81} │")
+                
+        if j == 7: # Telefones
+            print(f"│ {'':<81} │") 
+            print(f"│ {'-- TELEFONES --':<81} │")
+            for k in range(len(Medicos[i][j])):
+                texto_tel = f"{k+1}° Telefone: {Medicos[i][j][k]}"
+                print(f"│ {texto_tel:<81} │")
+            print("└" + "─"*83 + "┘\n") # Fecha o bloco de Contatos
+
+# =============================================== 2 - LISTAR UM MÉDICO =============================================== #
+            
+    # ====================BLOCO 1.1 VALIDAR CRM ==================== #
+
+def Validar_CRM(Medicos):
+    # Variável de apoio para as validações manuais
+    Digitos = "0123456789"
+
+    # Validação do CRM
+    CRM_Valido = False
+    while not CRM_Valido:
+        CRM = input("Digite o CRM do médico (6 dígitos): ")
+        
+        if len(CRM) != 6:
+            print("CRM inválido! Deve conter exatos 6 dígitos! ")
+            print()
+        else:
+            # Percorre toda a string pra garantir que não tenha letras
+            Tem_Letra = False
+            for i in range(len(CRM)):
+                if CRM[i] not in Digitos:
+                    Tem_Letra = True
+
+            if Tem_Letra:
+                print("CRM inválido! Contém letras e só pode ter números! ")
+                print()
+            else:
+                    return CRM
+  
+    # ==================== BLOCO 1.2 BUSCAR MÉDICO ==================== #
+def Buscar_Medico(Medicos,CRM):
+
+    for i in range(len(Medicos)):
+                    if Medicos[i][0] == CRM:  
+                       return True, i
+    else:
+        return False, None
+
+# ==================== BLOCO 2: LISTAR TODOS OS DADOS DE UM MÉDICO ==================== #
+def Listar_Todos_Dados_Medico(Medicos, indice):
+    print("_____________________________________________________________________________________")
+    print()
+    
+    CRM =       Medicos[indice][0]
+    Nome =      Medicos[indice][1]
+    Nasc =      Medicos[indice][2]
+    Sexo =      Medicos[indice][3]
+    Espec =     Medicos[indice][4]
+    Facul =     Medicos[indice][5]
+    Emails =    Medicos[indice][6]
+    Telefones = Medicos[indice][7]
+
+    # ==================== BLOCO 2.1: INFORMAÇÕES GERAIS ==================== #
+    print(f"MÉDICO 0{1+indice} - {Nome}")
+    # 83 traços + 2 cantos = 85 de largura total
+    print("┌" + "─"*32 + " INFO. GERAIS " + "─"*37 + "┐")
+    print(f"│ CRM: {CRM:<76} │")
+    print(f"│ Nome: {Nome:<75} │")
+    print(f"│ Data de Nascimento: {Nasc:<61} │")
+    print(f"│ Sexo: {Sexo:<75} │")
+    print(f"│ Especialidade: {Espec:<66} │")
+    print(f"│ Universidade em que se formou: {Facul:<50} │")
+    print("└" + "─"*83 + "┘\n")
+
+    # ==================== BLOCO 2.2: CONTATOS ==================== #
+    print("┌" + "─"*35 + " CONTATOS " + "─"*38 + "┐")
+    print(f"│ {'-- TELEFONES --':<81} │")
+    
+    for k in range(len(Telefones)):
+        texto_tel = f"{k+1}° Telefone: {Telefones[k]}"
+        print(f"│ {texto_tel:<81} │")
+        
+    print(f"│ {'':<81} │")
+    print(f"│ {'-- E-MAILS --':<81} │")
+    
+    for k in range(len(Emails)):
+        texto_email = f"{k+1}° E-mail: {Emails[k]}"
+        print(f"│ {texto_email:<81} │")
+        
+    print("└" + "─"*83 + "┘\n") 
+    
+# ==================== BLOCO 3: LISTAR UM DADO ESPECÍFICO DE UM MÉDICO ==================== #
+ 
+def Listar_Dado_Especifico_Medico(Medicos, indice, dado):
+    
+    CRM =       Medicos[indice][0]
+    Nome =      Medicos[indice][1]
+    Nasc =      Medicos[indice][2]
+    Sexo =      Medicos[indice][3]
+    Espec =     Medicos[indice][4]
+    Facul =     Medicos[indice][5]
+    Emails =    Medicos[indice][6]
+    Telefones = Medicos[indice][7] 
+
+    if dado == "1": # CRM
+        Limpar_Tela()
+        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("┌" + "─"*58 + "┐")
+        print(f"│ CRM: {CRM:<51} │")
+        print("└" + "─"*58 + "┘")
+        
+    elif dado == "2": # NOME
+        Limpar_Tela()
+        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("┌" + "─"*58 + "┐")
+        print(f"│ Nome: {Nome:<50} │")
+        print("└" + "─"*58 + "┘")
+        
+    elif dado == "3": # Data_Nascimento
+        Limpar_Tela()
+        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("┌" + "─"*58 + "┐")
+        print(f"│ Data de Nascimento: {Nasc:<36} │")
+        print("└" + "─"*58 + "┘")
+        
+    elif dado == "4": # Sexo
+        Limpar_Tela()
+        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("┌" + "─"*58 + "┐")
+        print(f"│ Sexo: {Sexo:<50} │")
+        print("└" + "─"*58 + "┘")
+        
+    elif dado == "5": # Especialidade
+        Limpar_Tela()
+        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("┌" + "─"*58 + "┐")
+        print(f"│ Especialidade: {Espec:<41} │")
+        print("└" + "─"*58 + "┘")
+
+    elif dado == "6": # Universidade em que se formou:
+        Limpar_Tela()
+        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("┌" + "─"*58 + "┐")
+        print(f"│ Universidade em que se formou:: {Facul:<24} │")
+        print("└" + "─"*58 + "┘")
+        
+    elif dado == "7": # E-mails
+        Limpar_Tela()
+        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("┌" + "─"*58 + "┐")
+        print(f"│ {'-- E-MAILS --':<56} │")
+        print("├" + "─"*58 + "┤")
+        for k in range(len(Emails)):
+            texto_email = f"{k+1}° E-mail: {Emails[k]}"
+            print(f"│ {texto_email:<56} │")
+        print("└" + "─"*58 + "┘")
+            
+    elif dado == "8": # Telefones
+        Limpar_Tela()
+        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("┌" + "─"*58 + "┐")
+        print(f"│ {'-- TELEFONES --':<56} │")
+        print("├" + "─"*58 + "┤")
+        for k in range(len(Telefones)):
+            texto_tel = f"{k+1}° Telefone: {Telefones[k]}"
+            print(f"│ {texto_tel:<56} │")
+        print("└" + "─"*58 + "┘")
+            
+    elif dado == "9": # Sair deste sub-menu
+        return ""
+    
+    else:
+        return "2"
+
+    input("\nPressione Enter para continuar... ")
+    Limpar_Tela()
+    return "2"
+
+# =============================================== 3 - INSERIR MÉDICOS =============================================== #
 
 def Incluir_Novo_Medico(Medicos):
     Medico = []    
@@ -35,13 +331,9 @@ def Incluir_Novo_Medico(Medicos):
                 print()
             else:
 
-                CRM_Duplicado = False
-                for medico_cadastrado in Medicos:
-                    # O CRM é sempre o primeiro item (índice 0) da lista do médico
-                    if medico_cadastrado[0] == CRM:
-                        CRM_Duplicado = True
+                CRM_Dupli = CRM_Duplicado(Medicos, CRM)
                 
-                if CRM_Duplicado:
+                if CRM_Dupli:
                     print("CRM inválido! Este CRM já está cadastrado no sistema!")
                     print()
                 else:
@@ -468,8 +760,9 @@ def Incluir_Novo_Medico(Medicos):
     return Medico
 
 def Main_Funcoes_Medico():
-    # Ordem: Médico = (CRM, Nome, Data de Nascimento, Sexo, Especialidade, Universidade em que se formou, E-mails, Telefones) 
+
     Medicos = []
+    Carregar_Dados_Arquivo_Medicos(Medicos)
 
     # Sub menu médicos
     i = ""
@@ -488,18 +781,71 @@ def Main_Funcoes_Medico():
         i = input("Digite sua escolha: ")
 
         while i == "1":
-            i = input(
-                (
-                    "Fim do exercício, digite 1 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
+            Limpar_Tela()
+            print("LISTA - PACIENTES")
+            Listar_Todos_Medicos(Medicos)
+            i = input("Fim da lista, digite 1 para rever a lista de todos os pacientes ou enter para voltar ao menu: ")
+
         while i == "2":
-            i = input(
-                (
-                    "Fim do exercício, digite 2 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
+            # ==================================BUSCAR UM PACIENTE==================================
+            Limpar_Tela()
+           
+            print("--------Busca de Pacientes--------")
+            CRM = Validar_CRM(Medicos)
+
+            j = "" #váriavel p/ escolher a opção dentro de listar um
+                    
+            achou_medico, indice_encontrado = Buscar_Medico(Medicos, CRM)
+
+            #Sub-menu para visualizar info sobre o paciente
+            if achou_medico:
+                
+                Nome_Medico = Medicos[indice_encontrado][1]
+                
+                print(f"\nMédico {Nome_Medico} encontrado(a)!")
+                
+                while j != "3": # Mudou para string
+                    Limpar_Tela()
+                    print("\nEscolha uma das opções:")
+                    print(f"1 - Listar todos os dados de {Nome_Medico}")
+                    print("2 - Listar uma informação do médico")
+                    print("3 - Sair deste menu") 
+                    
+                    j = input("Digite sua escolha : ").strip()
+                    
+                    while j == "1": 
+                        Limpar_Tela()
+                        Listar_Todos_Dados_Medico(Medicos, indice_encontrado)                       
+                        j = input("Pressione enter para voltar...") 
+                        Limpar_Tela()
+                        
+                    while j == "2":
+                        Limpar_Tela()
+                        print(f"\nEscolha um dos dados de {Nome_Medico} que gostaria de vizualizar :")
+                        print("1 - CRM")
+                        print("2 - Nome")
+                        print("3 - Data de Nascimento")
+                        print("4 - Sexo")
+                        print("5 - Especialidade")
+                        print("6 - Universidade em que se formou")
+                        print("7 - E-mails")
+                        print("8 - Telefones")
+                        print("9 - Sair deste menu") 
+                        k = input("Digite sua escolha : ")                       
+                        j = Listar_Dado_Especifico_Medico(Medicos, indice_encontrado, k)             
+   
+            else:
+                print("Médico não encontrado no sistema.")
+                j = input("Pressione enter para voltar...") 
+                
+            i = ""
         
+
+
+
+
+
+
         while i == "3":
             Medicos.append(Incluir_Novo_Medico(Medicos))
             Limpar_Tela()
@@ -518,5 +864,7 @@ def Main_Funcoes_Medico():
                     "Fim do exercício, digite 5 para refazer o exercício ou enter para voltar ao menu "
                 )
             )   
+
+    Gravar_Dados_Arquivo_Medicos(Medicos)
 
 Main_Funcoes_Medico()
