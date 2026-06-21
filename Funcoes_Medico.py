@@ -83,6 +83,10 @@ def CRM_Duplicado(Medicos, CRM):
 # =============================================== 1 - LISTAR TODOS MÉDICOS =============================================== #
 
 def Listar_Todos_Medicos(Medicos):
+    if len(Medicos) == 0:
+        print("Nenhum médico cadastrado no sistema!")
+        return
+
     for i in range(len(Medicos)):
         print("____________________________________________________________________________________")
         print()
