@@ -36,7 +36,7 @@ def Gravar_Dados_Arquivo_Pacientes(Pacientes):
     
 def Carregar_Dados_Arquivo_Pacientes(Pacientes):
     if Existe_Arquivo("Pacientes.txt"):
-       
+
         with open("Pacientes.txt", "r", encoding="utf-8") as arq:
             for linha in arq:
                 linha = linha.strip()
@@ -69,64 +69,58 @@ def Carregar_Dados_Arquivo_Pacientes(Pacientes):
                 
                 # Insere o paciente na lista principal
                 Pacientes.append(Paciente)
-          
-          
-          
-            
-       
-           
-                     
+
 
 
 
 # =============================================== 1 - Listar todos pacientes =============================================
 def Listar_Todos_Pacientes(Pacientes):
-  for i in range(len(Pacientes)):
-    print("___________________________________________________________________________________")
-    print()
-# Ordem: [CPF(0), Nome(1), Data de Nascimento(2), Sexo(3), Plano de Saúde(4), [E-mails](5), [Telefones](6)]
-        
-    for j in range(len(Pacientes[i])):
-        
-        # ==================== BLOCO 1: INFORMAÇÕES GERAIS ====================
-        if j == 0: # CPF
-            print(f"PACIENTE 0{1+i} - {Pacientes[i][1]}")
-            # 83 traços + 2 cantos = 85 de largura total
-            print("┌" + "─"*32 + " INFO. GERAIS " + "─"*37 + "┐")
-            print(f"│ CPF: {Pacientes[i][j]:<76} │")
-            
-        if j == 1: # NOME
-            print(f"│ Nome: {Pacientes[i][j]:<75} │")
-            
-        if j == 2: # Data_Nascimento
-            print(f"│ Data de Nascimento: {Pacientes[i][j]:<61} │")
-            
-        if j == 3: # Sexo
-            print(f"│ Sexo: {Pacientes[i][j]:<75} │")
-            
-        if j == 4: # Plano_saúde
-            print(f"│ Plano: {Pacientes[i][j]:<74} │")
-            print("└" + "─"*83 + "┘\n") # Fecha o bloco de Info Gerais
+    for i in range(len(Pacientes)):
+        print("___________________________________________________________________________________")
+        print()
+    # Ordem: [CPF(0), Nome(1), Data de Nascimento(2), Sexo(3), Plano de Saúde(4), [E-mails](5), [Telefones](6)]
+
+        for j in range(len(Pacientes[i])):
+
+            # ==================== BLOCO 1: INFORMAÇÕES GERAIS ====================
+            if j == 0: # CPF
+                print(f"PACIENTE 0{1+i} - {Pacientes[i][1]}")
+                # 83 traços + 2 cantos = 85 de largura total
+                print("┌" + "─"*32 + " INFO. GERAIS " + "─"*37 + "┐")
+                print(f"│ CPF: {Pacientes[i][j]:<76} │")
+
+            if j == 1: # NOME
+                print(f"│ Nome: {Pacientes[i][j]:<75} │")
+
+            if j == 2: # Data_Nascimento
+                print(f"│ Data de Nascimento: {Pacientes[i][j]:<61} │")
+
+            if j == 3: # Sexo
+                print(f"│ Sexo: {Pacientes[i][j]:<75} │")
+
+            if j == 4: # Plano_saúde
+                print(f"│ Plano: {Pacientes[i][j]:<74} │")
+                print("└" + "─"*83 + "┘\n") # Fecha o bloco de Info Gerais
 
 
-        # ==================== BLOCO 2: CONTATOS ====================
-        if j == 5: # Email
-            print("┌" + "─"*35 + " CONTATOS " + "─"*38 + "┐")
-            print(f"│ {'-- E-MAILS --':<81} │")
-            for k in range(len(Pacientes[i][j])):
-                texto_email = f"{k+1}° Email: {Pacientes[i][j][k]}"
-                print(f"│ {texto_email:<81} │")
-                
-        if j == 6: # Telefones
-            print(f"│ {'':<81} │") 
-            print(f"│ {'-- TELEFONES --':<81} │")
-            for k in range(len(Pacientes[i][j])):
-                texto_tel = f"{k+1}° Telefone: {Pacientes[i][j][k]}"
-                print(f"│ {texto_tel:<81} │")
-            print("└" + "─"*83 + "┘\n") # Fecha o bloco de Contatos
-            
+            # ==================== BLOCO 2: CONTATOS ====================
+            if j == 5: # Email
+                print("┌" + "─"*35 + " CONTATOS " + "─"*38 + "┐")
+                print(f"│ {'-- E-MAILS --':<81} │")
+                for k in range(len(Pacientes[i][j])):
+                    texto_email = f"{k+1}° Email: {Pacientes[i][j][k]}"
+                    print(f"│ {texto_email:<81} │")
+
+            if j == 6: # Telefones
+                print(f"│ {'':<81} │") 
+                print(f"│ {'-- TELEFONES --':<81} │")
+                for k in range(len(Pacientes[i][j])):
+                    texto_tel = f"{k+1}° Telefone: {Pacientes[i][j][k]}"
+                    print(f"│ {texto_tel:<81} │")
+                print("└" + "─"*83 + "┘\n") # Fecha o bloco de Contatos
+
 # ============================================//================================================= 
-    
+
     
     
     
@@ -173,14 +167,14 @@ def Validar_e_Obter_CPF():
             CPF = input("Digite o CPF do paciente novamente: ").strip()
             
     return CPF
-  
+
     # ===================== BLOCO 2.2 BUSCAR PACIENTE =================================
 def Buscar_Paciente(Pacientes,CPF):
 
 
     for i in range(len(Pacientes)):
                     if Pacientes[i][0] == CPF:  
-                       return True, i
+                        return True, i
     else:
         return False, None
 
@@ -229,7 +223,7 @@ def Listar_Todos_Dados_Paciente(Pacientes, indice):
     
     
 # ====================== BLOCO 4: LISTAR UM DADO ESPECÍFICO DE UM PACIENTE =============================== 
- 
+
 def Listar_Dado_Especifico_Paciente(Pacientes, indice, dado):
     
     # Suas variáveis declaradas no topo de forma limpa
@@ -350,7 +344,7 @@ def Verificar_CPF_Ja_Existe(Pacientes):
         
     if not CPF_Duplicado:
         return CPF
-     
+
 
 # =========================BLOCO 2: INCLUIR NOVO PACIENTE NO BANCO =================================
             
@@ -370,7 +364,7 @@ def Incluir_Novo_Paciente(Pacientes):
     
     
     CPF = Verificar_CPF_Ja_Existe(Pacientes)
-   
+
     
     
     
@@ -468,7 +462,7 @@ def Incluir_Novo_Paciente(Pacientes):
 
 
     # Validação do mês
-   
+
     
     Mes_Valido = False
     while not Mes_Valido:
@@ -552,7 +546,7 @@ def Incluir_Novo_Paciente(Pacientes):
 
 
     # Validação da Plano_Saude
-   
+
     print()
     print("-------------------------Plano de Saúde----------------------------")
     Plano_Saude_Valida = False
@@ -679,7 +673,7 @@ def Incluir_Novo_Paciente(Pacientes):
 
 
     # Validação dos Telefones
-   
+
     print()
     print("-------------------------TelefoneS----------------------------")
     Telefones_Do_Paciente = []
@@ -750,7 +744,7 @@ def Incluir_Novo_Paciente(Pacientes):
 # =============================== 4 - ALTERAR DADOS ESPECÍFICOS =========================================
 def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
     
-     # Variáveis de apoio para as validações manuais
+    # Variáveis de apoio para as validações manuais
     Digitos = "0123456789"
     Letras = "abcdefghijklmnopqrstuvwxyzçàãâáéêíôõóúü- "
     
@@ -1136,9 +1130,9 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
         input("\nPressione Enter para continuar... ") # Adicionado para dar tempo de ler o erro
     
 
-   
-   
-   
+
+
+
     
     print()
     print("-------------------------Alteração de Emails----------------------------")
@@ -1220,7 +1214,7 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
 
 
     # Validação dos Telefones
-   
+
     print()
     print("-------------------------TelefoneS----------------------------")
     Telefones_Do_Paciente = []
@@ -1296,12 +1290,9 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
 
 
 
-def Main_Funcoes_Pacientes():
+def Main_Funcoes_Pacientes(Pacientes):
 # Ordem: [CPF(0), Nome(1), Data de Nascimento(2), Sexo(3), Plano de Saúde(4), [E-mails](5), [Telefones](6)]
-    Pacientes = []
 
-
-    Carregar_Dados_Arquivo_Pacientes(Pacientes)
     i = ""
     while i != "6":
         print("Escolha uma das opções:")
@@ -1330,7 +1321,7 @@ def Main_Funcoes_Pacientes():
             
             # ==================================BUSCAR UM PACIENTE==================================
             Limpar_Tela()
-           
+
             print("--------Busca de Pacientes--------")
             CPF = Validar_e_Obter_CPF()
                 
@@ -1380,10 +1371,10 @@ def Main_Funcoes_Pacientes():
                         print("8 - Sair deste menu") 
                         k = input("Digite sua escolha : ")
                         
-                       
+
                         j = Listar_Dado_Especifico_Paciente(Pacientes, indice_encontrado, k)
                                                 
-                  
+
                     if j != "1" and j != "2" and j != "3":
                         Limpar_Tela()
                         print("Opção inválida. Digite um número entre 1 e 3.")
@@ -1398,13 +1389,13 @@ def Main_Funcoes_Pacientes():
                 print("Paciente não encontrado no sistema.")
                 j = input("Pressione enter para voltar...") 
                 
-           
+
             if j == "1" or j == "2" or j == "3": 
                 i = "1"
             else:
                 i = "1"
                 
-          
+
             Limpar_Tela()
             
         
@@ -1412,7 +1403,7 @@ def Main_Funcoes_Pacientes():
             
             Pacientes.append(Incluir_Novo_Paciente(Pacientes))
             Limpar_Tela()
-               
+
             i = input(
                 (
                     "Fim do exercício, digite 3 para refazer o exercício ou enter para voltar ao menu "
@@ -1463,13 +1454,13 @@ def Main_Funcoes_Pacientes():
                 print("Paciente não encontrado no sistema.")
                 j = input("Pressione enter para voltar...") 
                 
-           
+
             if j == "1" or j == "2" or j == "3" or j == "4" or j == "5" or j == "6" or j == "7": 
                 i = "1"
             else:
                 i = "1"
                 
-          
+
             Limpar_Tela()
                 
                 
@@ -1480,14 +1471,9 @@ def Main_Funcoes_Pacientes():
                 )
             )
             
-        while i == "5":
-               
-               
-               i = input(
-                (
-                    "Fim do exercício, digite 5 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-    Gravar_Dados_Arquivo_Pacientes(Pacientes)
-
-Main_Funcoes_Pacientes()
+        if i == "5":
+            Gravar_Dados_Arquivo_Pacientes(Pacientes)
+            a = input("Pressione ENTER para voltar ao menu principal:")
+        else:
+            a = input("Opção inválida! Pressione ENTER para voltar ao submenu de pacientes: ")
+    
