@@ -243,42 +243,52 @@ def Listar_Dado_Especifico_Paciente(Pacientes, indice, dado):
 
     if dado == "1": # CPF
         print("___________________________________________________________________________________")
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ CPF: {CPF:<51} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
+        
         
     elif dado == "2": # NOME
         print("___________________________________________________________________________________")
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print()
         print("┌" + "─"*58 + "┐")
         print(f"│ Nome: {Nome:<50} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
+        
         
     elif dado == "3": # Data_Nascimento
         print("___________________________________________________________________________________")
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ Data de Nascimento: {Nasc:<36} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
+        
         
     elif dado == "4": # Sexo
         print("___________________________________________________________________________________")
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ Sexo: {Sexo:<50} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
+        
         
     elif dado == "5": # Plano_saúde
         print("___________________________________________________________________________________")
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ Plano de Saúde: {Plano:<40} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
+        
         
     elif dado == "6": # E-mails
         print("___________________________________________________________________________________")
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ {'-- E-MAILS --':<56} │")
         print("├" + "─"*58 + "┤")
@@ -286,10 +296,12 @@ def Listar_Dado_Especifico_Paciente(Pacientes, indice, dado):
             texto_email = f"{k+1}° E-mail: {Emails[k]}"
             print(f"│ {texto_email:<56} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
+        
             
     elif dado == "7": # Telefones
         print("___________________________________________________________________________________")
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ {'-- TELEFONES --':<56} │")
         print("├" + "─"*58 + "┤")
@@ -297,21 +309,14 @@ def Listar_Dado_Especifico_Paciente(Pacientes, indice, dado):
             texto_tel = f"{k+1}° Telefone: {Telefones[k]}"
             print(f"│ {texto_tel:<56} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
+        
             
     elif dado == "8": # Sair deste sub-menu
         Limpar_Tela()
         return "1"
-    
-    else:
-        Limpar_Tela()
-        print("Opção inválida. Digite um número entre 1 e 8.")
-        input("\nPressione Enter para continuar... ") # Adicionado para dar tempo de ler o erro
-        Limpar_Tela()
-        return "2"
 
-    input("\nPressione Enter para continuar... ")
-    Limpar_Tela()
-    return "2"
+    return "1"
 
 # ============================================//====================================================
 
@@ -748,11 +753,56 @@ def Incluir_Novo_Paciente(Pacientes):
 
 
 # =============================== 4 - ALTERAR DADOS ESPECÍFICOS =========================================
+
+
+def Escolher_Email_Especifico(Pacientes, indice):
+    print("\nEscolha um e-mail pela posição dele:")
+
+    limite_emails = len(Pacientes[indice][5])
+
+    while True:
+        Escolha = input("\nDigite o número da posição do e-mail: ").strip()
+
+        if Escolha.isdigit():
+            Escolha = int(Escolha)
+
+            if 1 <= Escolha <= limite_emails:
+                return Escolha
+            else:
+                print(f"Opção inválida! Digite um número entre 1 e {limite_emails}.")
+        else:
+            print("Opção inválida! Digite apenas um número.")
+
+
+def Escolher_Telefone_Especifico(Pacientes, indice):
+    print("\nEscolha um telefone pela posição dele:")
+
+    limite_telefones = len(Pacientes[indice][6])
+
+    while True:
+        Escolha = input("\nDigite o número da posição do telefone: ").strip()
+
+        if Escolha.isdigit():
+            Escolha = int(Escolha)
+
+            if 1 <= Escolha <= limite_telefones:
+                return Escolha
+            else:
+                print(f"Opção inválida! Digite um número entre 1 e {limite_telefones}.")
+        else:
+            print("Opção inválida! Digite apenas um número.")
+
+
 def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
     
      # Variáveis de apoio para as validações manuais
     Digitos = "0123456789"
     Letras = "abcdefghijklmnopqrstuvwxyzçàãâáéêíôõóúü- "
+    
+    #Transformando em int para poder acrescentar +1 na opção que ele escolheu, já que o cpf não é alterável, para não ter que imprimir tudo de novo
+    dado = int(dado)
+    dado = dado +1
+    dado = str(dado)
     
     
     Nome =      Pacientes[indice][1]
@@ -763,13 +813,13 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
     Telefones = Pacientes[indice][6] 
 
         
-    if dado == "1": # NOME
-        print("___________________________________________________________________________________")
-        print("┌" + "─"*58 + "┐")
-        print(f"│ Nome: {Nome:<50} │")
-        print("└" + "─"*58 + "┘")
+    if dado == "2": # NOME
+        print("-------------------------Alteração do Nome----------------------------")
+        
+        Listar_Dado_Especifico_Paciente(Pacientes,indice, dado)
         print()
-        print("-------------------------Alteração de Nome----------------------------")
+        
+        
         Nome_Valido = False
         while not Nome_Valido:
             Nome = input("Digite o novo nome do paciente: ")
@@ -813,24 +863,28 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
         Nome = Nome_formatado
         Pacientes[indice][1] = Nome
         
-        print("___________________________________________________________________________________")
-        print(f"\nNOME ATUALIZADO!")
-        print("┌" + "─"*58 + "┐")
-        print(f"│ Nome: {Nome:<50} │")
-        print("└" + "─"*58 + "┘")
-        print()
+        Limpar_Tela()
+        
+        
+        print(f"NOME ATUALIZADO!")
+        
+        Listar_Dado_Especifico_Paciente(Pacientes,indice, dado)
+        
+        
+        
         input("Pressione enter para voltar ao menu...")
         Limpar_Tela()
         return 1
     
         
         
-    elif dado == "2": # Data_Nascimento
-        print("___________________________________________________________________________________")
-        print(f"\n{Nome}")
-        print("┌" + "─"*58 + "┐")
-        print(f"│ Data de Nascimento: {Nasc:<36} │")
-        print("└" + "─"*58 + "┘")
+    elif dado == "3": # Data_Nascimento
+        
+        print("-------------------------Alteração de Data de Nascimento----------------------------")
+
+        Listar_Dado_Especifico_Paciente(Pacientes,indice, dado)
+        print()
+        
         
 
         # Variáveis para montar a data no final
@@ -841,9 +895,6 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
 
 
         # Validação do dia
-        
-        print()
-        print("-------------------------Alteração de Data de Nascimento----------------------------")
         Dia_Valido = False
         while not Dia_Valido:
             Dia_De_Nascimento = input("Digite o dia de nascimento do paciente (1 a 31): ")
@@ -939,27 +990,25 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
         Data_De_Nascimento = Dia_De_Nascimento + "/" + Mes_De_Nascimento + "/" + Ano_De_Nascimento
         Pacientes[indice][2] = Data_De_Nascimento
         
-        print("___________________________________________________________________________________")
-        print(f"\nDATA DE NASCIMENTO ATUALIZADA DE: {Nome}")
-        print("┌" + "─"*58 + "┐")
-        print(f"│ Data de Nascimento: {Nasc:<36} │")
-        print("└" + "─"*58 + "┘")
-        print()
+        Limpar_Tela()
+        
+        
+        print(f"DATA DE NASCIMENTO ATUALIZADA!")
+        
+        Listar_Dado_Especifico_Paciente(Pacientes,indice, dado)
+        
         input("Pressione enter para voltar ao menu...")
         Limpar_Tela()
         return 2
         
         
         
-    elif dado == "3": # Sexo
-        print("___________________________________________________________________________________")
-        print(f"\n{Nome}")
-        print("┌" + "─"*58 + "┐")
-        print(f"│ Sexo: {Sexo:<50} │")
-        print("└" + "─"*58 + "┘")
-        
-        print()
+    elif dado == "4": # Sexo
         print("-------------------------Alteração de Sexo----------------------------")
+
+        Listar_Dado_Especifico_Paciente(Pacientes,indice, dado)
+        print()
+        
         Sexo_Valido = False
         while not Sexo_Valido:
             Sexo_Do_Paciente = input("Digite o sexo do paciente (M para masculino ou F para feminino): ")
@@ -971,27 +1020,29 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
                 print()
             else:
                 Sexo_Valido = True
+                
+                
 
         Pacientes[indice][3] = Sexo_Do_Paciente
         
-        print("___________________________________________________________________________________")
-        print(f"\nSEXO ATUALIZADO DE: {Nome}")
-        print("┌" + "─"*58 + "┐")
-        print(f"│ Sexo: {Sexo:<50} │")
-        print("└" + "─"*58 + "┘")
-        print()
+        Limpar_Tela()
+        print(f"DATA DE NASCIMENTO ATUALIZADA!")
+
+        Listar_Dado_Especifico_Paciente(Pacientes,indice, dado)
+        input("Pressione enter para voltar ao menu...")
+        Limpar_Tela()
+        
         return 3
         
         
         
-    elif dado == "4": # Plano_saúde
-        print("___________________________________________________________________________________")
-        print(f"\n{Nome}")
-        print("┌" + "─"*58 + "┐")
-        print(f"│ Plano de Saúde: {Plano:<40} │")
-        print("└" + "─"*58 + "┘")
-        print()
+    elif dado == "5": # Plano_saúde
         print("-------------------------Alteração do Plano de Saúde----------------------------")
+
+        Listar_Dado_Especifico_Paciente(Pacientes,indice, dado)
+        print()
+        
+        
         Plano_Saude_Valida = False
         while not Plano_Saude_Valida:
             Plano_Saude = input("Digite o Plano de Saúde do paciente: ")
@@ -1033,122 +1084,37 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
         Plano_Saude = Plano_Saude_formatada
         Pacientes[indice][4] = Plano_Saude
         
-        print("___________________________________________________________________________________")
-        print(f"\nPLANO DE SAÚDE ATUALIZADO DE: {Nome}")
-        print("┌" + "─"*58 + "┐")
-        print(f"│ Plano de Saúde: {Plano:<40} │")
-        print("└" + "─"*58 + "┘")
-        print()
+        Limpar_Tela()
+        print(f"DATA DE NASCIMENTO ATUALIZADA!")
+
+        Listar_Dado_Especifico_Paciente(Pacientes,indice, dado)
         input("Pressione enter para voltar ao menu...")
         Limpar_Tela()
+        
         return 4
         
-    elif dado == "5": # E-mails
-        print("___________________________________________________________________________________")
-        print(f"\n{Nome}")
-        print("┌" + "─"*58 + "┐")
-        print(f"│ {'-- E-MAILS --':<56} │")
-        print("├" + "─"*58 + "┤")
-        for k in range(len(Emails)):
-            texto_email = f"{k+1}° E-mail: {Emails[k]}"
-            print(f"│ {texto_email:<56} │")
-        print("└" + "─"*58 + "┘")
+    elif dado == "6": # E-mails
+        print("-------------------------Alteração E-mails----------------------------")
+
+        Listar_Dado_Especifico_Paciente(Pacientes, indice, dado)
         print()
-        print("-------------------------Alteração de Emails----------------------------")
-        
-        # Email_Do_Paciente = ""
-        # Continuar_Email = True
-        
-        
-        # Email_Valido = False
-        # while not Email_Valido:
-        #         Email = input("Digite o e-mail do paciente: ")
-        #         Email = Email.lower()
 
-        #         Tem_Espaco = False
-        #         Qtd_Arroba = 0
+        # Se houver apenas 1 e-mail, evita pedir posição novamente
+        if len(Pacientes[indice][5]) == 1:
+            Email_Escolhido = 1
+            print(f"O email '{Pacientes[indice][5][0]}' é o único na lista de emails do paciente,\nentão ele será o escolhido para alteração.")
+            print()
+        else:
+            Email_Escolhido = Escolher_Email_Especifico(Pacientes, indice)
+            Limpar_Tela()
+            print(f"O email escolhido para alteração foi: {Pacientes[indice][5][Email_Escolhido - 1]}")
 
-        #         # Conta os arrobas e verifica se tem espaços
-        #         for i in range(len(Email)):
-        #             if Email[i] == " ":
-        #                 Tem_Espaco = True
-        #             if Email[i] == "@":
-        #                 Qtd_Arroba += 1
-
-        #         if Tem_Espaco:
-        #             print("E-mail inválido! O e-mail não pode conter espaços.")
-        #             print()
-        #         elif Qtd_Arroba != 1:
-        #             print("E-mail inválido! O e-mail deve conter exatamente um @")
-        #             print()
-        #         else:
-        #             # Quebra a string no '@' para validar o nome e o domínio separadamente
-        #             Partes = Email.split("@")
-        #             Usuario = Partes[0]
-        #             Dominio = Partes[1]
-
-        #             Qtd_Ponto_Dominio = 0
-        #             for i in range(len(Dominio)):
-        #                 if Dominio[i] == ".":
-        #                     Qtd_Ponto_Dominio += 1
-
-        #             if len(Usuario) < 1:
-        #                 print("E-mail inválido! Deve conter letras ou números antes do @")
-        #                 print()
-        #             elif Qtd_Ponto_Dominio < 1:
-        #                 print("E-mail inválido! O domínio deve conter pelo menos um ponto.")
-        #                 print()
-        #             else:
-        #                 # Verifica se as partes entre os pontos do domínio não estão vazias
-        #                 Partes_Dominio = Dominio.split(".")
-        #                 Dominio_Valido = True
-                        
-        #                 for parte in Partes_Dominio:
-        #                     if len(parte) == 0:
-        #                         Dominio_Valido = False
-
-        #                 if not Dominio_Valido:
-        #                     print("E-mail inválido! Formato incorreto (exemplo válido: a@a.a)")
-        #                 else:
-        #                     Email_Valido = True
-        #                     Email_Do_Paciente.append(Email)
-        #                     print("E-mail adicionado com sucesso!")
-        #                     print()
-            
-    elif dado == "6": # Telefones
-        print("___________________________________________________________________________________")
-        print(f"\n{Nome}")
-        print("┌" + "─"*58 + "┐")
-        print(f"│ {'-- TELEFONES --':<56} │")
-        print("├" + "─"*58 + "┤")
-        for k in range(len(Telefones)):
-            texto_tel = f"{k+1}° Telefone: {Telefones[k]}"
-            print(f"│ {texto_tel:<56} │")
-        print("└" + "─"*58 + "┘")
-            
-    elif dado == "7": # Sair deste sub-menu
-        Limpar_Tela()
-        return "7"
-    
-    else:
-        Limpar_Tela()
-        print("Opção inválida. Digite um número entre 1 e 7.")
-        input("\nPressione Enter para continuar... ") # Adicionado para dar tempo de ler o erro
-    
-
-   
-   
-   
-    
-    print()
-    print("-------------------------Alteração de Emails----------------------------")
-    Emails_Do_Paciente = []
-    Continuar_Email = True
-    
-    while Continuar_Email:
         Email_Valido = False
+        
+        print()
+
         while not Email_Valido:
-            Email = input("Digite o e-mail do paciente: ")
+            Email = input("Digite o novo e-mail do paciente: ")
             Email = Email.lower()
 
             Tem_Espaco = False
@@ -1188,7 +1154,7 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
                     # Verifica se as partes entre os pontos do domínio não estão vazias
                     Partes_Dominio = Dominio.split(".")
                     Dominio_Valido = True
-                    
+
                     for parte in Partes_Dominio:
                         if len(parte) == 0:
                             Dominio_Valido = False
@@ -1197,47 +1163,59 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
                         print("E-mail inválido! Formato incorreto (exemplo válido: a@a.a)")
                     else:
                         Email_Valido = True
-                        Emails_Do_Paciente.append(Email)
-                        print("E-mail adicionado com sucesso!")
-                        print()
+                        Pacientes[indice][5][Email_Escolhido - 1] = Email
 
-        # Loop para adicionar mais e-mails caso necessário
-        Opcao_Valida = False
-        while not Opcao_Valida:
-            Opcao = input("Deseja adicionar mais um e-mail? (S para Sim / N para Não): ")
-            Opcao = Opcao.upper()
-            
-            if Opcao == "S":
-                Opcao_Valida = True
-            elif Opcao == "N":
-                Opcao_Valida = True
-                Continuar_Email = False
-            else:
-                print("Opção inválida! Digite apenas S ou N.")
-                print()
+        Limpar_Tela()
+        print("EMAIL ATUALIZADO!")
 
-    Pacientes.append(Emails_Do_Paciente)
+        Listar_Dado_Especifico_Paciente(Pacientes, indice, dado)
+        input("Pressione enter para voltar ao menu...")
+        Limpar_Tela()
+
+        return 6
 
 
-    # Validação dos Telefones
-   
-    print()
-    print("-------------------------TelefoneS----------------------------")
-    Telefones_Do_Paciente = []
-    Continuar_Telefone = True
+
+        
+
+        
+        
     
-    while Continuar_Telefone:
-        Telefone_Valido = False
-        while not Telefone_Valido:
-            Telefone = input("Digite o telefone do paciente com DDD (apenas números, 10 ou 11 dígitos): ")
             
-            # Limita a 10 (fixo com DDD) ou 11 (celular com DDD) números
+    elif dado == "7": # Telefones
+        print("-------------------------Alteração Telefones----------------------------")
+
+        # Mostra os dados atuais desse campo antes de alterar
+        Listar_Dado_Especifico_Paciente(Pacientes, indice, dado)
+        print()
+
+        # Se houver apenas 1 telefone, evita pedir posição novamente
+        if len(Pacientes[indice][6]) == 1:
+            Telefone_Escolhido = 1
+            print(f"O telefone '{Pacientes[indice][6][0]}' é o único na lista de telefones do paciente,\nentão ele será o escolhido para alteração.")
+            print()
+        else:
+            # Se houver mais de um, pede para escolher qual telefone alterar
+            Telefone_Escolhido = Escolher_Telefone_Especifico(Pacientes, indice)
+            Limpar_Tela()
+            print(f"O telefone escolhido para alteração foi: {Pacientes[indice][6][Telefone_Escolhido - 1]}")
+
+        # Limpa a tela antes de pedir o novo telefone
+        print()
+        Telefone_Valido = False
+
+        # Loop para validar o novo telefone digitado
+        while not Telefone_Valido:
+            # Pede o novo telefone ao usuário
+            Telefone = input("Digite o novo telefone do paciente com DDD (apenas números, 10 ou 11 dígitos): ")
+
+            # Verifica se o tamanho está certo
             if len(Telefone) < 10 or len(Telefone) > 11:
                 print("Telefone inválido! Deve conter 10 ou 11 números (incluindo o DDD).")
                 print()
             else:
+                # Verifica se há letras no telefone
                 Tem_Letra = False
-                # Garante que não digitaram letras ou símbolos especiais
                 for i in range(len(Telefone)):
                     if Telefone[i] not in Digitos:
                         Tem_Letra = True
@@ -1246,52 +1224,42 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
                     print("Telefone inválido! Digite apenas números.")
                     print()
                 else:
-                    # Formatação: (XX) XXXXX-XXXX ou (XX) XXXX-XXXX
-                    DDD = Telefone[0:2] # Pega os dois primeiros números
-                    
+                    # Separa o DDD e o número
+                    DDD = Telefone[0:2]
+
                     if len(Telefone) == 10:
-                        # Separa o número fixo (4 dígitos + 4 dígitos)
                         Numero_Parte1 = Telefone[2:6]
                         Numero_Parte2 = Telefone[6:10]
                     else:
-                        # Separa o número celular (5 dígitos + 4 dígitos)
                         Numero_Parte1 = Telefone[2:7]
                         Numero_Parte2 = Telefone[7:11]
-                        
-                    # Junta tudo no formato final
+
+                    # Formata o telefone como (XX) XXXX-XXXX ou (XX) XXXXX-XXXX
                     Telefone_Formatado = "(" + DDD + ") " + Numero_Parte1 + "-" + Numero_Parte2
-                    
                     Telefone_Valido = True
-                    Telefones_Do_Paciente.append(Telefone_Formatado)
-                    print("Telefone adicionado com sucesso:", Telefone_Formatado)
-                    print()
+                    # Atualiza o telefone escolhido na lista do paciente
+                    Pacientes[indice][6][Telefone_Escolhido - 1] = Telefone_Formatado
 
-        # Loop para perguntar se quer adicionar mais um
-        Opcao_Valida = False
-        while not Opcao_Valida:
-            Opcao = input("Deseja adicionar mais um telefone? (S para Sim / N para Não): ")
-            Opcao = Opcao.upper()
-            
-            if Opcao == "S":
-                Opcao_Valida = True
-            elif Opcao == "N":
-                Opcao_Valida = True
-                Continuar_Telefone = False
-            else:
-                print("Opção inválida! Digite apenas S ou N.")
-                print()
+        # Limpa a tela e mostra a confirmação
+        Limpar_Tela()
+        print("TELEFONE ATUALIZADO!")
 
-    Pacientes.append(Telefones_Do_Paciente)
+        # Exibe o dado atualizado
+        Listar_Dado_Especifico_Paciente(Pacientes, indice, dado)
+        input("Pressione enter para voltar ao menu...")
+        Limpar_Tela()
 
+        return 7
 
-
-
-
-
-
-
-
-
+    elif dado == "8": # Sair deste sub-menu
+        Limpar_Tela()
+        return "7"
+    
+    else:
+        Limpar_Tela()
+        print("Opção inválida. Digite um número entre 1 e 7.")
+        input("\nPressione Enter para continuar... ") # Adicionado para dar tempo de ler o erro
+    
 
 
 
@@ -1349,12 +1317,12 @@ def Main_Funcoes_Pacientes():
                 
                 
                 
-                print(f"\nPaciente {Nome_Paciente} encontrado/a!")
+                print(f"Paciente {Nome_Paciente} encontrado/a!")
                 
                 while j != "3": # Mudou para string
                     print("\nEscolha uma das opções:")
                     print(f"1 - Listar todos os dados de {Nome_Paciente}")
-                    print("2 - Listar um paciente")
+                    print("2 - Listar um dado específico")
                     print("3 - Sair deste menu") 
                     
                     
@@ -1421,6 +1389,8 @@ def Main_Funcoes_Pacientes():
             
         while i == "4":
             
+            Limpar_Tela()
+            
             print("--------Busca de pacientes p/ alteraração de dados--------")
             CPF = Validar_e_Obter_CPF()
                 
@@ -1434,9 +1404,10 @@ def Main_Funcoes_Pacientes():
             if achou_paciente:
                 
                 Nome_Paciente = Pacientes[indice_encontrado][1]
-    
                 
-                print(f"\nPaciente {Nome_Paciente} encontrado/a! ")
+                Limpar_Tela()
+                
+                print(f"Paciente {Nome_Paciente} encontrado/a! ")
             
                 while j != "7": # Mudou para string
                             
@@ -1449,6 +1420,8 @@ def Main_Funcoes_Pacientes():
                             print("6 - Telefones")
                             print("7 - Sair deste menu") 
                             j = input("Digite sua escolha : ")
+                            
+                            Limpar_Tela()
                             
                         
                             j = Alterar_Dado_Especifico_Paciente(Pacientes, indice_encontrado, j)
