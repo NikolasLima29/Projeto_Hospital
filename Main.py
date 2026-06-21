@@ -1,77 +1,47 @@
-import string
+import os
+
+from Funcoes_Medico import Carregar_Dados_Arquivo_Medicos, Main_Funcoes_Medico
+from Funcoes_Paciente import Carregar_Dados_Arquivo_Pacientes, Main_Funcoes_Pacientes
+from Funcoes_Consultas import Main_Funcoes_Consulta
+from Funcoes_Relatorios import Main_Funcoes_Relatorios
+
+def Limpar_Tela():
+    # Limpa o terminal independente do sistema operacional (Windows ou Linux/Mac)
+    os.system('cls' if os.name == 'nt' else 'clear')
             
-        
-        
-        
-    
-    
+def Menu():
+    Limpar_Tela()
+    print("Menu")
+    print("1 - Submenu de Médicos")
+    print("2 - Submenu de Pacientes")
+    print("3 - Submenu de Consultas")
+    print("4 - Submenu Relatórios")
+    print("5 - Sair")
+    i = input("Digite sua escolha: ")
+    return i
 
+def Main():
 
-def main():
+    Medicos = []
+    Pacientes = []
+
+    Carregar_Dados_Arquivo_Medicos(Medicos)
+    Carregar_Dados_Arquivo_Pacientes(Pacientes)
+
     i = ""
-    while i != "11":
-        print("Escolha um dos exercício")
-        print("1 - exercício 1")
-        print("5- sair")
-        i = input("Digite sua escolha: ")
-        while i == "1":
-        
+    while i != "5":
+        i = Menu()
+        if i == "1":
+            Main_Funcoes_Medico(Medicos)
+        elif i == "2":  
+            Main_Funcoes_Pacientes(Pacientes)
+        elif i == "3":
+            Main_Funcoes_Consulta(Medicos, Pacientes)
+        elif i == "4":
+            Main_Funcoes_Relatorios(Medicos, Pacientes)
+        elif i == "5":
+            print("Fim do programa!")
+        else:
+            a = input("Opção inválida! Pressione ENTER para voltar ao menu: ")
 
-            i = input(
-                (
-                    "Fim do exercício, digite 1 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-        while i == "2":
-        
-                
-            i = input(
-                (
-                    "Fim do exercício, digite 2 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-        
-        while i == "3":
-            
-            
-            
-            i = input(
-                (
-                    "Fim do exercício, digite 3 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-            
-        while i == "4":
-        
-            
-            i = input(
-                (
-                    "Fim do exercício, digite 4 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-            
-        while i == "5":
-            
-            
-            i = input(
-                (
-                    "Fim do exercício, digite 5 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-                    
-
-        
-            
-        # if not i == "":
-        #     print("/////////////// ERRO ///////////////////")
-        #     print("Digite novamente, escolha apenas entre 1 a 5")
-        #     input("Digite enter para voltar ao menu")
-            
-        # else:
-        #     print("/////////////// ERRO ///////////////////")
-        #     print("Digite novamente, escolha apenas entre 1 a 5")
-        #     input("Digite enter para voltar ao menu")
-            
-
-
-main()
+Main()
