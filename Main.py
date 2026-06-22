@@ -37,7 +37,7 @@ def Main():
         elif i == "2":  
             Main_Funcoes_Pacientes(Pacientes)
         elif i == "3":
-            Main_Funcoes_Consulta(Medicos, Pacientes)
+            Main_Funcoes_Consulta(Medicos, Pacientes, Consultas)
         elif i == "4":
             Main_Funcoes_Relatorios(Medicos, Pacientes, Consultas)
         elif i == "5":
