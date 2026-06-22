@@ -98,6 +98,8 @@ def Menu_Listar_Dado_Especifico(Nome_Paciente):
 
 def Menu_Alterar_Dados(Nome_Paciente):
     Limpar_Tela()
+    print(f"Paciente {Nome_Paciente} encontrado(a)!")
+    print()
     print(f"Escolha um dos dados de {Nome_Paciente} que gostaria de alterar:")
     print("1 - Nome")
     print("2 - Data de Nascimento")
@@ -1033,7 +1035,7 @@ def Deletar_Dado_Paciente(Pacientes, indice, opcao):
     elif opcao == "2":
         if len(Pacientes[indice][5]) <= 1:
             Limpar_Tela()
-            print("Não é possível excluir o e-mail porque o paciente possui apenas um (ou nenhum) e-mail cadastrado.")
+            print("Não é possível excluir o e-mail porque o paciente possui apenas um e-mail cadastrado.")
             input("Pressione enter para voltar...")
             Limpar_Tela()
             return False
@@ -1062,7 +1064,7 @@ def Deletar_Dado_Paciente(Pacientes, indice, opcao):
     elif opcao == "3":
         if len(Pacientes[indice][6]) <= 1:
             Limpar_Tela()
-            print("Não é possível excluir o telefone porque o paciente possui apenas um (ou nenhum) telefone cadastrado.")
+            print("Não é possível excluir o telefone porque o paciente possui apenas um telefone cadastrado.")
             input("Pressione enter para voltar...")
             Limpar_Tela()
             return False
@@ -1177,13 +1179,15 @@ def Main_Funcoes_Pacientes(Pacientes):
             if achou_paciente:
                 Nome_Paciente = Pacientes[indice_encontrado][1]
                 j = ""
-                while j != "4":
+                continuar_exclusao = True
+
+                while continuar_exclusao and j != "4":
                     j = Menu_Excluir_Dados(Nome_Paciente)
+
                     if j in ["1", "2", "3"]:
                         paciente_foi_deletado = Deletar_Dado_Paciente(Pacientes, indice_encontrado, j)
                         if paciente_foi_deletado:
-                            # Se a opção foi excluir tudo, não há mais paciente, então quebra este menu local
-                            break
+                            continuar_exclusao = False
                     elif j != "4":
                         input("\nOpção inválida! Pressione ENTER para tentar novamente...")
             else:

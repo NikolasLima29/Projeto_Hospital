@@ -26,7 +26,7 @@ def Gravar_Arquivo_Relatorio(nome_arquivo, linhas):
             arq.write(linha + "\n")
 
 # Ordem: Médico = [CRM (0), Nome (1), Data de Nascimento (2), Sexo (3), Especialidade (4), Universidade em que se formou (5), E-mails (6), Telefones (7)]
-# Ordem: [CPF(0), Nome(1), Data de Nascimento(2), Sexo(3), Plano de Saúde(4), [E-mails](5), [Telefones](6)]
+# Ordem: PAcientes = [CPF(0), Nome(1), Data de Nascimento(2), Sexo(3), Plano de Saúde(4), [E-mails](5), [Telefones](6)]
 # Ordem: Consulta = [CRM (0), CPF (1), Data (2), Hora (3), Diagnóstico (4), Medicamentos (5)]
 
 def Buscar_Medico_Por_CRM(Medicos, CRM):

@@ -107,6 +107,8 @@ def Menu_Listar_Dado_Especifico_Medico(Nome_Medico):
 
 def Menu_Alterar_Dados_Medico(Nome_Medico):
     Limpar_Tela()
+    print(f"Médico {Nome_Medico} encontrado(a)!")
+    print()
     print(f"Escolha um dos dados de {Nome_Medico} que gostaria de alterar:")
     print("1 - Nome")
     print("2 - Data de Nascimento")
@@ -116,6 +118,17 @@ def Menu_Alterar_Dados_Medico(Nome_Medico):
     print("6 - E-mails")
     print("7 - Telefones")
     print("8 - Sair deste menu") 
+    j = input("Digite sua escolha: ")
+    return j
+
+def Menu_Excluir_Dados_Medico(Nome_Medico):
+    Limpar_Tela()
+    print(f"Médico {Nome_Medico} encontrado(a)!")
+    print("\nEscolha uma opção:")
+    print("1 - Excluir o médico")
+    print("2 - Excluir um e-mail do médico")
+    print("3 - Excluir um telefone do médico")
+    print("4 - Sair deste menu")
     j = input("Digite sua escolha: ")
     return j
 
@@ -282,50 +295,56 @@ def Listar_Dado_Especifico_Medico(Medicos, indice, dado):
     Telefones = Medicos[indice][7] 
 
     if dado == "1": # CRM
-        Limpar_Tela()
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("___________________________________________________________________________________")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ CRM: {CRM:<51} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
         
     elif dado == "2": # NOME
-        Limpar_Tela()
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("___________________________________________________________________________________")
+        print()
         print("┌" + "─"*58 + "┐")
         print(f"│ Nome: {Nome:<50} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
         
     elif dado == "3": # Data_Nascimento
-        Limpar_Tela()
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("___________________________________________________________________________________")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ Data de Nascimento: {Nasc:<36} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
         
     elif dado == "4": # Sexo
-        Limpar_Tela()
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("___________________________________________________________________________________")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ Sexo: {Sexo:<50} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
         
     elif dado == "5": # Especialidade
-        Limpar_Tela()
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("___________________________________________________________________________________")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ Especialidade: {Espec:<41} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
 
-    elif dado == "6": # Universidade em que se formou:
-        Limpar_Tela()
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+    elif dado == "6": # Universidade em que se formou
+        print("___________________________________________________________________________________")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
-        print(f"│ Universidade em que se formou:: {Facul:<24} │")
+        print(f"│ Universidade em que se formou: {Facul:<24} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
         
     elif dado == "7": # E-mails
-        Limpar_Tela()
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("___________________________________________________________________________________")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ {'-- E-MAILS --':<56} │")
         print("├" + "─"*58 + "┤")
@@ -333,10 +352,11 @@ def Listar_Dado_Especifico_Medico(Medicos, indice, dado):
             texto_email = f"{k+1}° E-mail: {Emails[k]}"
             print(f"│ {texto_email:<56} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
             
     elif dado == "8": # Telefones
-        Limpar_Tela()
-        print(f"\nEXIBINDO DADO DE: {Nome}")
+        print("___________________________________________________________________________________")
+        print(f"\n{Nome}")
         print("┌" + "─"*58 + "┐")
         print(f"│ {'-- TELEFONES --':<56} │")
         print("├" + "─"*58 + "┤")
@@ -344,6 +364,7 @@ def Listar_Dado_Especifico_Medico(Medicos, indice, dado):
             texto_tel = f"{k+1}° Telefone: {Telefones[k]}"
             print(f"│ {texto_tel:<56} │")
         print("└" + "─"*58 + "┘")
+        print("___________________________________________________________________________________")
             
     elif dado == "9": # Sair deste sub-menu
         return ""
@@ -351,7 +372,500 @@ def Listar_Dado_Especifico_Medico(Medicos, indice, dado):
     else:
         return "2"
 
-# =============================================== 3 - INSERIR MÉDICOS =============================================== #
+# ==================== BLOCO 4: ESCOLHER E-MAIL/TELEFONE ESPECÍFICO ==================== #
+
+def Escolher_Email_Especifico_Medico(Medicos, indice):
+    quantidade = len(Medicos[indice][6])
+    
+    while True:
+        print("Escolha qual e-mail deseja alterar:")
+        for k in range(quantidade):
+            print(f"{k+1} - {Medicos[indice][6][k]}")
+        escolha = input("Digite o número correspondente: ").strip()
+
+        if escolha.isdigit() and 1 <= int(escolha) <= quantidade:
+            return int(escolha)
+        print("Opção inválida! Digite um número válido.")
+
+
+def Escolher_Telefone_Especifico_Medico(Medicos, indice):
+    quantidade = len(Medicos[indice][7])
+    
+    while True:
+        print("Escolha qual telefone deseja alterar:")
+        for k in range(quantidade):
+            print(f"{k+1} - {Medicos[indice][7][k]}")
+        escolha = input("Digite o número correspondente: ").strip()
+
+        if escolha.isdigit() and 1 <= int(escolha) <= quantidade:
+            return int(escolha)
+        print("Opção inválida! Digite um número válido.")
+
+# ==================== BLOCO 5: ALTERAR DADOS DE UM MÉDICO ==================== #
+
+def Alterar_Dado_Especifico_Medico(Medicos, indice, dado):
+    Digitos = "0123456789"
+    Letras = "abcdefghijklmnopqrstuvwxyzçàãâáéêíôõóúü- "
+
+    dado = int(dado)
+    dado = dado + 1
+    dado = str(dado)
+
+    if dado == "2":  # Nome
+        print("-------------------------Alteração do Nome----------------------------")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        print()
+        Nome_Valido = False
+        while not Nome_Valido:
+            Nome = input("Digite o novo nome do médico: ")
+            Nome = Nome.lower()
+            if len(Nome) == 0:
+                print("Nome inválido! O nome não pode estar vazio!")
+                print()
+            else:
+                Caractere_Invalido = False
+                So_Espaco = True
+                for i in range(len(Nome)):
+                    if Nome[i] not in Letras:
+                        Caractere_Invalido = True
+                    if Nome[i] != " ":
+                        So_Espaco = False
+                if Caractere_Invalido:
+                    print("Nome inválido! Use apenas letras e espaços.")
+                    print()
+                elif So_Espaco:
+                    print("Nome Inválido! O nome não pode ser composto apenas por espaços!")
+                    print()
+                else:
+                    Nome_Valido = True
+
+        Nome = Nome.title()
+        Nome_sem_espacos = Nome.replace(" ", "")
+        Nome_formatado = ""
+        for i in range(len(Nome_sem_espacos)):
+            letra = Nome_sem_espacos[i]
+            if letra.isupper() and i > 0:
+                Nome_formatado += " " + letra
+            else:
+                Nome_formatado += letra
+        Nome = Nome_formatado
+        Medicos[indice][1] = Nome
+        Limpar_Tela()
+        print("NOME ATUALIZADO!")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        input("Pressione enter para voltar ao menu...")
+        Limpar_Tela()
+        return 1
+
+    elif dado == "3":  # Data de Nascimento
+        print("-------------------------Alteração de Data de Nascimento----------------------------")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        print()
+
+        Dia_Valido = False
+        while not Dia_Valido:
+            Dia_De_Nascimento = input("Digite o dia de nascimento do médico (1 a 31): ")
+            if len(Dia_De_Nascimento) < 1 or len(Dia_De_Nascimento) > 2:
+                print("Dia inválido! O dia deve conter 1 ou 2 dígitos!")
+                print()
+            else:
+                Tem_Letra = False
+                for i in range(len(Dia_De_Nascimento)):
+                    if Dia_De_Nascimento[i] not in Digitos:
+                        Tem_Letra = True
+                if Tem_Letra:
+                    print("Dia inválido! Contém letras e só pode ter números!")
+                    print()
+                else:
+                    Dia_De_Nascimento = int(Dia_De_Nascimento)
+                    if Dia_De_Nascimento < 1 or Dia_De_Nascimento > 31:
+                        print("Dia inválido! Os dias vão de 1 a 31!")
+                        print()
+                    else:
+                        Dia_De_Nascimento = str(Dia_De_Nascimento)
+                        Dia_Valido = True
+
+        if len(Dia_De_Nascimento) == 1:
+            Dia_De_Nascimento = "0" + Dia_De_Nascimento
+
+        Mes_Valido = False
+        while not Mes_Valido:
+            Mes_De_Nascimento = input("Digite o mês de nascimento do médico (1 a 12): ")
+            if len(Mes_De_Nascimento) < 1 or len(Mes_De_Nascimento) > 2:
+                print("Mês inválido! O mês deve conter 1 ou 2 dígitos!")
+                print()
+            else:
+                Tem_Letra = False
+                for i in range(len(Mes_De_Nascimento)):
+                    if Mes_De_Nascimento[i] not in Digitos:
+                        Tem_Letra = True
+                if Tem_Letra:
+                    print("Mês inválido! Contém letras e só pode ter números!")
+                    print()
+                else:
+                    Mes_De_Nascimento = int(Mes_De_Nascimento)
+                    if Mes_De_Nascimento < 1 or Mes_De_Nascimento > 12:
+                        print("Mês inválido! Os meses vão de 1 a 12!")
+                        print()
+                    else:
+                        Mes_De_Nascimento = str(Mes_De_Nascimento)
+                        Mes_Valido = True
+
+        if len(Mes_De_Nascimento) == 1:
+            Mes_De_Nascimento = "0" + Mes_De_Nascimento
+
+        Ano_Valido = False
+        while not Ano_Valido:
+            Ano_De_Nascimento = input("Digite o ano de nascimento do médico (acima de 1900): ")
+            if len(Ano_De_Nascimento) != 4:
+                print("Ano inválido! O ano deve conter exatamente 4 dígitos!")
+                print()
+            else:
+                Tem_Letra = False
+                for i in range(len(Ano_De_Nascimento)):
+                    if Ano_De_Nascimento[i] not in Digitos:
+                        Tem_Letra = True
+                if Tem_Letra:
+                    print("Ano inválido! Contém letras e só pode ter números!")
+                    print()
+                else:
+                    Ano_De_Nascimento = int(Ano_De_Nascimento)
+                    if Ano_De_Nascimento < 1900:
+                        print("Ano inválido! Digite um ano acima de 1900!")
+                        print()
+                    else:
+                        Ano_De_Nascimento = str(Ano_De_Nascimento)
+                        Ano_Valido = True
+
+        Data_De_Nascimento = Dia_De_Nascimento + "/" + Mes_De_Nascimento + "/" + Ano_De_Nascimento
+        Medicos[indice][2] = Data_De_Nascimento
+        Limpar_Tela()
+        print("DATA DE NASCIMENTO ATUALIZADA!")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        input("Pressione enter para voltar ao menu...")
+        Limpar_Tela()
+        return 2
+
+    elif dado == "4":  # Sexo
+        print("-------------------------Alteração de Sexo----------------------------")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        print()
+        Sexo_Valido = False
+        while not Sexo_Valido:
+            Sexo_Do_Medico = input("Digite o sexo do médico (M para masculino ou F para feminino): ")
+            Sexo_Do_Medico = Sexo_Do_Medico.upper()
+            if Sexo_Do_Medico != "M" and Sexo_Do_Medico != "F":
+                print("Sexo inválido! O sexo deve ser apenas M ou F!")
+                print()
+            else:
+                Sexo_Valido = True
+        Medicos[indice][3] = Sexo_Do_Medico
+        Limpar_Tela()
+        print("SEXO ATUALIZADO!")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        input("Pressione enter para voltar ao menu...")
+        Limpar_Tela()
+        return 3
+
+    elif dado == "5":  # Especialidade
+        print("-------------------------Alteração da Especialidade----------------------------")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        print()
+        Especialidade_Valida = False
+        while not Especialidade_Valida:
+            Especialidade = input("Digite a nova especialidade do médico: ")
+            Especialidade = Especialidade.lower()
+            if len(Especialidade) == 0:
+                print("Especialidade inválida! A especialidade não pode estar vazia!")
+                print()
+            else:
+                Caractere_Invalido = False
+                So_Espaco = True
+                for i in range(len(Especialidade)):
+                    if Especialidade[i] not in Letras:
+                        Caractere_Invalido = True
+                    if Especialidade[i] != " ":
+                        So_Espaco = False
+                if Caractere_Invalido:
+                    print("Especialidade inválida! Use apenas letras e espaços.")
+                    print()
+                elif So_Espaco:
+                    print("Especialidade inválida! A especialidade não pode ser composta apenas por espaços!")
+                    print()
+                else:
+                    Especialidade_Valida = True
+
+        Especialidade = Especialidade.title()
+        Especialidade_sem_espacos = Especialidade.replace(" ", "")
+        Especialidade_formatada = ""
+        for i in range(len(Especialidade_sem_espacos)):
+            letra = Especialidade_sem_espacos[i]
+            if letra.isupper() and i > 0:
+                Especialidade_formatada += " " + letra
+            else:
+                Especialidade_formatada += letra
+        Especialidade = Especialidade_formatada
+        Medicos[indice][4] = Especialidade
+        Limpar_Tela()
+        print("ESPECIALIDADE ATUALIZADA!")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        input("Pressione enter para voltar ao menu...")
+        Limpar_Tela()
+        return 4
+
+    elif dado == "6":  # Universidade
+        print("-------------------------Alteração da Universidade----------------------------")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        print()
+        Universidade_Valida = False
+        while not Universidade_Valida:
+            Universidade = input("Digite a nova universidade do médico: ")
+            Universidade = Universidade.lower()
+            if len(Universidade) == 0:
+                print("Universidade inválida! A universidade não pode estar vazia!")
+                print()
+            else:
+                Caractere_Invalido = False
+                So_Espaco = True
+                for i in range(len(Universidade)):
+                    if Universidade[i] not in Letras:
+                        Caractere_Invalido = True
+                    if Universidade[i] != " ":
+                        So_Espaco = False
+                if Caractere_Invalido:
+                    print("Universidade inválida! Use apenas letras e espaços.")
+                    print()
+                elif So_Espaco:
+                    print("Universidade inválida! A universidade não pode ser composta apenas por espaços!")
+                    print()
+                else:
+                    Universidade_Valida = True
+
+        Universidade = Universidade.title()
+        Universidade_sem_espacos = Universidade.replace(" ", "")
+        Universidade_formatada = ""
+        for i in range(len(Universidade_sem_espacos)):
+            letra = Universidade_sem_espacos[i]
+            if letra.isupper() and i > 0:
+                Universidade_formatada += " " + letra
+            else:
+                Universidade_formatada += letra
+        Universidade = Universidade_formatada
+        Medicos[indice][5] = Universidade
+        Limpar_Tela()
+        print("UNIVERSIDADE ATUALIZADA!")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        input("Pressione enter para voltar ao menu...")
+        Limpar_Tela()
+        return 5
+
+    elif dado == "7":  # E-mails
+        print("-------------------------Alteração E-mails----------------------------")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        print()
+        if len(Medicos[indice][6]) == 1:
+            Email_Escolhido = 1
+            print(f"O e-mail '{Medicos[indice][6][0]}' é o único na lista de e-mails do médico, então ele será o escolhido para alteração.")
+            print()
+        else:
+            Email_Escolhido = Escolher_Email_Especifico_Medico(Medicos, indice)
+            Limpar_Tela()
+            print(f"O e-mail escolhido para alteração foi: {Medicos[indice][6][Email_Escolhido - 1]}")
+
+        Email_Valido = False
+        while not Email_Valido:
+            Email = input("Digite o novo e-mail do médico: ")
+            Email = Email.lower()
+            Tem_Espaco = False
+            Qtd_Arroba = 0
+            for i in range(len(Email)):
+                if Email[i] == " ":
+                    Tem_Espaco = True
+                if Email[i] == "@":
+                    Qtd_Arroba += 1
+            if Tem_Espaco:
+                print("E-mail inválido! O e-mail não pode conter espaços.")
+                print()
+            elif Qtd_Arroba != 1:
+                print("E-mail inválido! O e-mail deve conter exatamente um @")
+                print()
+            else:
+                Partes = Email.split("@")
+                Usuario = Partes[0]
+                Dominio = Partes[1]
+                Qtd_Ponto_Dominio = 0
+                for i in range(len(Dominio)):
+                    if Dominio[i] == ".":
+                        Qtd_Ponto_Dominio += 1
+                if len(Usuario) < 1:
+                    print("E-mail inválido! Deve conter letras ou números antes do @")
+                    print()
+                elif Qtd_Ponto_Dominio < 1:
+                    print("E-mail inválido! O domínio deve conter pelo menos um ponto.")
+                    print()
+                else:
+                    Partes_Dominio = Dominio.split(".")
+                    Dominio_Valido = True
+                    for parte in Partes_Dominio:
+                        if len(parte) == 0:
+                            Dominio_Valido = False
+                    if not Dominio_Valido:
+                        print("E-mail inválido! Formato incorreto (exemplo válido: a@a.a)")
+                    else:
+                        Email_Valido = True
+                        Medicos[indice][6][Email_Escolhido - 1] = Email
+
+        Limpar_Tela()
+        print("E-MAIL ATUALIZADO!")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        input("Pressione enter para voltar ao menu...")
+        Limpar_Tela()
+        return 6
+
+    elif dado == "8":  # Telefones
+        print("-------------------------Alteração Telefones----------------------------")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        print()
+        if len(Medicos[indice][7]) == 1:
+            Telefone_Escolhido = 1
+            print(f"O telefone '{Medicos[indice][7][0]}' é o único na lista de telefones do médico, então ele será o escolhido para alteração.")
+            print()
+        else:
+            Telefone_Escolhido = Escolher_Telefone_Especifico_Medico(Medicos, indice)
+            Limpar_Tela()
+            print(f"O telefone escolhido para alteração foi: {Medicos[indice][7][Telefone_Escolhido - 1]}")
+
+        Telefone_Valido = False
+        while not Telefone_Valido:
+            Telefone = input("Digite o novo telefone do médico com DDD (apenas números, 10 ou 11 dígitos): ")
+            if len(Telefone) < 10 or len(Telefone) > 11:
+                print("Telefone inválido! Deve conter 10 ou 11 números (incluindo o DDD).")
+                print()
+            else:
+                Tem_Letra = False
+                for i in range(len(Telefone)):
+                    if Telefone[i] not in Digitos:
+                        Tem_Letra = True
+                if Tem_Letra:
+                    print("Telefone inválido! Digite apenas números.")
+                    print()
+                else:
+                    DDD = Telefone[0:2]
+                    if len(Telefone) == 10:
+                        Numero_Parte1 = Telefone[2:6]
+                        Numero_Parte2 = Telefone[6:10]
+                    else:
+                        Numero_Parte1 = Telefone[2:7]
+                        Numero_Parte2 = Telefone[7:11]
+                    Telefone_Formatado = "(" + DDD + ") " + Numero_Parte1 + "-" + Numero_Parte2
+                    Telefone_Valido = True
+                    Medicos[indice][7][Telefone_Escolhido - 1] = Telefone_Formatado
+
+        Limpar_Tela()
+        print("TELEFONE ATUALIZADO!")
+        Listar_Dado_Especifico_Medico(Medicos, indice, dado)
+        input("Pressione enter para voltar ao menu...")
+        Limpar_Tela()
+        return 7
+
+    elif dado == "9":
+        Limpar_Tela()
+        return "8"
+    else:
+        Limpar_Tela()
+        print("Opção inválida. Digite um número entre 1 e 7.")
+        input("\nPressione Enter para continuar... ")
+
+# ==================== BLOCO 6: EXCLUIR DADOS DE UM MÉDICO ==================== #
+
+def Deletar_Dado_Medico(Medicos, indice, opcao):
+    Nome_Medico = Medicos[indice][1]
+
+    if opcao == "1":
+        Limpar_Tela()
+        print(f"Tem certeza que deseja excluir o médico {Nome_Medico}?")
+        confirmacao = input("Digite S para confirmar ou N para cancelar: ").strip().upper()
+
+        if confirmacao == "S":
+            Limpar_Tela()
+            Medicos.pop(indice)
+            print(f"Médico {Nome_Medico} excluído com sucesso!")
+            input("Pressione enter para voltar ao menu principal...")
+            Limpar_Tela()
+            return True
+        else:
+            Limpar_Tela()
+            print("Exclusão cancelada.")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return False
+
+    elif opcao == "2":
+        if len(Medicos[indice][6]) <= 1:
+            Limpar_Tela()
+            print("Não é possível excluir o e-mail porque o médico possui apenas um e-mail cadastrado.")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return False
+
+        Limpar_Tela()
+        Listar_Dado_Especifico_Medico(Medicos, indice, "7")
+        Email_Escolhido = Escolher_Email_Especifico_Medico(Medicos, indice)
+        Limpar_Tela()
+        print(f"O e-mail escolhido para exclusão foi: {Medicos[indice][6][Email_Escolhido - 1]}")
+        confirmacao = input("Digite S para confirmar ou N para cancelar: ").strip().upper()
+
+        if confirmacao == "S":
+            Limpar_Tela()
+            Medicos[indice][6].pop(Email_Escolhido - 1)
+            print("E-mail excluído com sucesso!")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return False
+        else:
+            Limpar_Tela()
+            print("Exclusão cancelada.")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return False
+
+    elif opcao == "3":
+        if len(Medicos[indice][7]) <= 1:
+            Limpar_Tela()
+            print("Não é possível excluir o telefone porque o médico possui apenas telefone cadastrado.")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return False
+
+        Limpar_Tela()
+        Listar_Dado_Especifico_Medico(Medicos, indice, "8")
+        Telefone_Escolhido = Escolher_Telefone_Especifico_Medico(Medicos, indice)
+        Limpar_Tela()
+        print(f"O telefone escolhido para exclusão foi: {Medicos[indice][7][Telefone_Escolhido - 1]}")
+        confirmacao = input("Digite S para confirmar ou N para cancelar: ").strip().upper()
+
+        if confirmacao == "S":
+            Limpar_Tela()
+            Medicos[indice][7].pop(Telefone_Escolhido - 1)
+            print("Telefone excluído com sucesso!")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return False
+        else:
+            Limpar_Tela()
+            print("Exclusão cancelada.")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return False
+
+    else:
+        Limpar_Tela()
+        print("Opção inválida.")
+        input("Pressione enter para voltar...")
+        Limpar_Tela()
+        return False
+
+# =============================================== 4 - MAIN DOS MÉDICOS =============================================== #
 
 def Incluir_Novo_Medico(Medicos):
     Medico = []    
@@ -872,10 +1386,7 @@ def Main_Funcoes_Medico(Medicos):
                     j = Menu_Alterar_Dados_Medico(Nome_Medico)
                     if j in ["1", "2", "3", "4", "5", "6", "7"]:
                         Limpar_Tela()
-                        # Quando for criar a função de alterar médico, basta chamá-la aqui como no paciente:
-                        # Alterar_Dado_Especifico_Medico(Medicos, indice_encontrado, j)
-                        print("Função de alterar dado específico do médico em desenvolvimento.")
-                        input("\nPressione ENTER para voltar...")
+                        Alterar_Dado_Especifico_Medico(Medicos, indice_encontrado, j)
                     elif j == "8":
                         print("Voltando ao Menu...")
                     else:
@@ -886,8 +1397,25 @@ def Main_Funcoes_Medico(Medicos):
         elif i == "5":
             # ==================================EXCLUIR==================================
             Limpar_Tela()
-            print("Função de excluir médico em desenvolvimento.")
-            input("\nPressione ENTER para voltar ao menu: ") 
+            print("--------Busca de médicos para exclusão--------")
+            CRM = Validar_CRM(Medicos)
+            achou_medico, indice_encontrado = Buscar_Medico(Medicos, CRM)
+
+            if achou_medico:
+                Nome_Medico = Medicos[indice_encontrado][1]
+                j = ""
+                continuar_exclusao = True
+
+                while continuar_exclusao and j != "4":
+                    j = Menu_Excluir_Dados_Medico(Nome_Medico)
+                    if j in ["1", "2", "3"]:
+                        medico_foi_deletado = Deletar_Dado_Medico(Medicos, indice_encontrado, j)
+                        if medico_foi_deletado:
+                            continuar_exclusao = False
+                    elif j != "4":
+                        input("\nOpção inválida! Pressione ENTER para tentar novamente...")
+            else:
+                input("\nMédico não encontrado no sistema. Pressione ENTER para voltar...")
             
         elif i == "6":
             # ==================================SAIR==================================
