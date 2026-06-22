@@ -108,6 +108,17 @@ def Menu_Alterar_Dados(Nome_Paciente):
     print("7 - Sair deste menu") 
     j = input("Digite sua escolha: ").strip()
     return j
+
+def Menu_Excluir_Dados(Nome_Paciente):
+    Limpar_Tela()
+    print(f"Paciente {Nome_Paciente} encontrado(a)!")
+    print("\nEscolha uma opção:")
+    print("1 - Excluir o paciente")
+    print("2 - Excluir um e-mail do paciente")
+    print("3 - Excluir um telefone do paciente")
+    print("4 - Sair deste menu")
+    j = input("Digite sua escolha: ").strip()
+    return j
 # =============================================== 1 - Listar todos pacientes =============================================
 def Listar_Todos_Pacientes(Pacientes):
     for i in range(len(Pacientes)):
@@ -1011,22 +1022,24 @@ def Deletar_Dado_Paciente(Pacientes, indice, opcao):
             print(f"Paciente {Nome_Paciente} excluído com sucesso!")
             input("Pressione enter para voltar ao menu principal...")
             Limpar_Tela()
-            return "1"
+            return True # O paciente inteiro foi deletado, então avisa o Main para fechar o submenu
         else:
             Limpar_Tela()
             print("Exclusão cancelada.")
             input("Pressione enter para voltar...")
             Limpar_Tela()
-            return "5"
+            return False # Retorna False para manter o menu aberto
 
     elif opcao == "2":
-        if len(Pacientes[indice][5]) == 1:
+        if len(Pacientes[indice][5]) <= 1:
             Limpar_Tela()
-            print("Não é possível excluir o e-mail porque o paciente possui apenas um e-mail cadastrado.")
+            print("Não é possível excluir o e-mail porque o paciente possui apenas um (ou nenhum) e-mail cadastrado.")
             input("Pressione enter para voltar...")
             Limpar_Tela()
-            return "5"
+            return False
 
+        Limpar_Tela()
+        Listar_Dado_Especifico_Paciente(Pacientes, indice, "6")
         Email_Escolhido = Escolher_Email_Especifico(Pacientes, indice)
         Limpar_Tela()
         print(f"O e-mail escolhido para exclusão foi: {Pacientes[indice][5][Email_Escolhido - 1]}")
@@ -1038,22 +1051,24 @@ def Deletar_Dado_Paciente(Pacientes, indice, opcao):
             print("E-mail excluído com sucesso!")
             input("Pressione enter para voltar...")
             Limpar_Tela()
-            return "5"
+            return False # Retorna False para manter o menu aberto
         else:
             Limpar_Tela()
             print("Exclusão cancelada.")
             input("Pressione enter para voltar...")
             Limpar_Tela()
-            return "5"
+            return False
 
     elif opcao == "3":
-        if len(Pacientes[indice][6]) == 1:
+        if len(Pacientes[indice][6]) <= 1:
             Limpar_Tela()
-            print("Não é possível excluir o telefone porque o paciente possui apenas um telefone cadastrado.")
+            print("Não é possível excluir o telefone porque o paciente possui apenas um (ou nenhum) telefone cadastrado.")
             input("Pressione enter para voltar...")
             Limpar_Tela()
-            return "5"
+            return False
 
+        Limpar_Tela()
+        Listar_Dado_Especifico_Paciente(Pacientes, indice, "7")
         Telefone_Escolhido = Escolher_Telefone_Especifico(Pacientes, indice)
         Limpar_Tela()
         print(f"O telefone escolhido para exclusão foi: {Pacientes[indice][6][Telefone_Escolhido - 1]}")
@@ -1065,20 +1080,20 @@ def Deletar_Dado_Paciente(Pacientes, indice, opcao):
             print("Telefone excluído com sucesso!")
             input("Pressione enter para voltar...")
             Limpar_Tela()
-            return "5"
+            return False # Retorna False para manter o menu aberto
         else:
             Limpar_Tela()
             print("Exclusão cancelada.")
             input("Pressione enter para voltar...")
             Limpar_Tela()
-            return "5"
+            return False
 
     else:
         Limpar_Tela()
         print("Opção inválida.")
         input("Pressione enter para voltar...")
         Limpar_Tela()
-        return "5"
+        return False
 
 
 def Main_Funcoes_Pacientes(Pacientes):
@@ -1091,6 +1106,7 @@ def Main_Funcoes_Pacientes(Pacientes):
             print("LISTA - PACIENTES")
             Listar_Todos_Pacientes(Pacientes)
             input("\nFim da lista. Pressione ENTER para voltar ao menu: ")
+            
         elif i == "2":
             # ==================================BUSCAR UM PACIENTE==================================
             Limpar_Tela()
@@ -1116,21 +1132,19 @@ def Main_Funcoes_Pacientes(Pacientes):
                                 Limpar_Tela()
                                 Listar_Dado_Especifico_Paciente(Pacientes, indice_encontrado, k)
                                 input("\nPressione ENTER para voltar...")
-                            elif k == "8":
-                                print("Voltando ao Menu...")
-                            else:
+                            elif k != "8":
                                 input("\nOpção inválida! Pressione ENTER para tentar novamente...")
-                    elif j == "3":
-                        print("Voltando ao Menu...")
-                    else:
+                    elif j != "3":
                         input("\nOpção inválida! Pressione ENTER para tentar novamente...")
             else:
                 input("\nPaciente não encontrado no sistema. Pressione ENTER para voltar...") 
+                
         elif i == "3":
             # ==================================INSERIR NOVO PACIENTE==================================
             Limpar_Tela()
             Pacientes.append(Incluir_Novo_Paciente(Pacientes))
             input("\nPaciente incluído com sucesso! Pressione ENTER para voltar ao menu: ")
+            
         elif i == "4":
             # ==================================ALTERAR DADOS==================================
             Limpar_Tela()
@@ -1147,76 +1161,39 @@ def Main_Funcoes_Pacientes(Pacientes):
                     if j in ["1", "2", "3", "4", "5", "6"]:
                         Limpar_Tela()
                         Alterar_Dado_Especifico_Paciente(Pacientes, indice_encontrado, j)
-                    elif j == "7":
-                        print("Voltando ao Menu...")
-                    else:
+                    elif j != "7":
                         input("\nOpção inválida! Pressione ENTER para tentar novamente...")
             else:
                 input("\nPaciente não encontrado no sistema. Pressione ENTER para voltar...") 
+                
         elif i == "5":
             # ==================================EXCLUIR==================================
             Limpar_Tela()
-                
-                
-            
-            i = input(
-                (
-                    "Fim do exercício, digite 4 para refazer o exercício ou enter para voltar ao menu "
-                )
-            )
-
-        while i == "5":
-            Limpar_Tela()
-
-            print("--------Busca de pacientes p/ exclusão--------")
+            print("--------Busca de pacientes para exclusão--------")
             CPF = Validar_e_Obter_CPF()
             CPF = Formatar_CPF(CPF)
-
             achou_paciente, indice_encontrado = Buscar_Paciente(Pacientes, CPF)
-
+            
             if achou_paciente:
                 Nome_Paciente = Pacientes[indice_encontrado][1]
-                Limpar_Tela()
-                print(f"Paciente {Nome_Paciente} encontrado/a!")
-
-                submenu_excluir = True
-                while submenu_excluir:
-                    print("\nEscolha uma opção:")
-                    print("1 - Excluir o paciente")
-                    print("2 - Excluir um e-mail do paciente")
-                    print("3 - Excluir um telefone do paciente")
-                    print("4 - Sair deste menu")
-                    opcao_exclusao = input("Digite sua escolha: ").strip()
-
-                    if opcao_exclusao == "4":
-                        Limpar_Tela()
-                        submenu_excluir = False
-                    else:
-                        resultado = Deletar_Dado_Paciente(Pacientes, indice_encontrado, opcao_exclusao)
-
-                        if resultado == "1":
-                            i = "1"
-                            submenu_excluir = False
-                        elif resultado == "5":
-                            i = "5"
-                            # mantém o submenu ativo para continuar a exclusão
-                            Limpar_Tela()
-                        else:
-                            Limpar_Tela()
-
-                if i == "5":
-                    # se o usuário saiu do submenu sem apagar o paciente, volta ao menu principal
-                    i = "1"
+                j = ""
+                while j != "4":
+                    j = Menu_Excluir_Dados(Nome_Paciente)
+                    if j in ["1", "2", "3"]:
+                        paciente_foi_deletado = Deletar_Dado_Paciente(Pacientes, indice_encontrado, j)
+                        if paciente_foi_deletado:
+                            # Se a opção foi excluir tudo, não há mais paciente, então quebra este menu local
+                            break
+                    elif j != "4":
+                        input("\nOpção inválida! Pressione ENTER para tentar novamente...")
             else:
-                print("Paciente não encontrado no sistema.")
-                input("Pressione enter para voltar...")
-                i = "1"
-
-            Limpar_Tela()
-            
-        if i == "6":
+                input("\nPaciente não encontrado no sistema. Pressione ENTER para voltar...")
+                
+        elif i == "6":
+            # ==================================SAIR==================================
             Limpar_Tela()
             Gravar_Dados_Arquivo_Pacientes(Pacientes)
             input("\nDados gravados! Pressione ENTER para voltar ao menu principal: ")
+            
         else:
             input("\nOpção inválida! Pressione ENTER para tentar novamente: ")
