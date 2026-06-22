@@ -24,6 +24,7 @@ def Main():
 
     Medicos = []
     Pacientes = []
+    Consultas = []
 
     Carregar_Dados_Arquivo_Medicos(Medicos)
     Carregar_Dados_Arquivo_Pacientes(Pacientes)
@@ -38,10 +39,10 @@ def Main():
         elif i == "3":
             Main_Funcoes_Consulta(Medicos, Pacientes)
         elif i == "4":
-            Main_Funcoes_Relatorios(Medicos, Pacientes)
+            Main_Funcoes_Relatorios(Medicos, Pacientes, Consultas)
         elif i == "5":
             print("Fim do programa!")
         else:
-            a = input("Opção inválida! Pressione ENTER para voltar ao menu: ")
+            input("Opção inválida! Pressione ENTER para voltar ao menu: ")
 
 Main()
