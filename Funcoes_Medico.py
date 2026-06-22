@@ -66,6 +66,59 @@ def Carregar_Dados_Arquivo_Medicos(Medicos):
                 # Insere o médico na lista principal
                 Medicos.append(Medico)
 
+# ========================================= MENUS DOS MÉDICOS ==================================================
+
+def Menu_Medicos():
+    Limpar_Tela()
+    print("Menu de Médicos")
+    print("1 - Listar todos os médicos")
+    print("2 - Listar um médico")
+    print("3 - Incluir um novo médico")
+    print("4 - Alterar")
+    print("5 - Excluir")
+    print("6 - Sair")
+    i = input("Digite sua escolha: ")
+    return i
+
+def Menu_Listar_Um_Medico(Nome_Medico):
+    Limpar_Tela()
+    print(f"Médico {Nome_Medico} encontrado(a)!")
+    print("\nEscolha uma das opções:")
+    print(f"1 - Listar todos os dados de {Nome_Medico}")
+    print("2 - Listar uma informação do médico")
+    print("3 - Sair deste menu") 
+    j = input("Digite sua escolha: ")
+    return j
+
+def Menu_Listar_Dado_Especifico_Medico(Nome_Medico):
+    Limpar_Tela()
+    print(f"Escolha um dos dados de {Nome_Medico} que gostaria de visualizar:")
+    print("1 - CRM")
+    print("2 - Nome")
+    print("3 - Data de Nascimento")
+    print("4 - Sexo")
+    print("5 - Especialidade")
+    print("6 - Universidade em que se formou")
+    print("7 - E-mails")
+    print("8 - Telefones")
+    print("9 - Sair deste menu") 
+    k = input("Digite sua escolha: ")
+    return k
+
+def Menu_Alterar_Dados_Medico(Nome_Medico):
+    Limpar_Tela()
+    print(f"Escolha um dos dados de {Nome_Medico} que gostaria de alterar:")
+    print("1 - Nome")
+    print("2 - Data de Nascimento")
+    print("3 - Sexo")
+    print("4 - Especialidade")
+    print("5 - Universidade em que se formou")
+    print("6 - E-mails")
+    print("7 - Telefones")
+    print("8 - Sair deste menu") 
+    j = input("Digite sua escolha: ")
+    return j
+
 # =============================================== OUTRAS FUNÇÕES =============================================== #
 
 def Limpar_Tela():
@@ -298,10 +351,6 @@ def Listar_Dado_Especifico_Medico(Medicos, indice, dado):
     else:
         return "2"
 
-    input("\nPressione Enter para continuar... ")
-    Limpar_Tela()
-    return "2"
-
 # =============================================== 3 - INSERIR MÉDICOS =============================================== #
 
 def Incluir_Novo_Medico(Medicos):
@@ -310,7 +359,6 @@ def Incluir_Novo_Medico(Medicos):
     # Variáveis de apoio para as validações manuais
     Digitos = "0123456789"
     Letras = "abcdefghijklmnopqrstuvwxyzçàãâáéêíôõóúü- "
-
 
     # Validação do CRM
     Limpar_Tela()
@@ -343,9 +391,7 @@ def Incluir_Novo_Medico(Medicos):
                 else:
                     CRM_Valido = True
 
-
     Medico.append(CRM)
-
 
     # Validação do nome
     Limpar_Tela()
@@ -394,13 +440,11 @@ def Incluir_Novo_Medico(Medicos):
     Nome = Nome_formatado
     Medico.append(Nome)
 
-
     # Variáveis para montar a data no final
     Data_De_Nascimento = ""
     Dia_De_Nascimento = ""
     Mes_De_Nascimento = ""
     Ano_De_Nascimento = ""
-
 
     # Validação do dia
     Limpar_Tela()
@@ -436,7 +480,6 @@ def Incluir_Novo_Medico(Medicos):
     if len(Dia_De_Nascimento) == 1:
         Dia_De_Nascimento = "0" + Dia_De_Nascimento
 
-
     # Validação do mês
     Limpar_Tela()
     print("3 - Incluir um novo médico:")
@@ -468,7 +511,6 @@ def Incluir_Novo_Medico(Medicos):
 
     if len(Mes_De_Nascimento) == 1:
         Mes_De_Nascimento = "0" + Mes_De_Nascimento
-
 
     # Validação do ano
     Limpar_Tela()
@@ -504,7 +546,6 @@ def Incluir_Novo_Medico(Medicos):
     Data_De_Nascimento = Dia_De_Nascimento + "/" + Mes_De_Nascimento + "/" + Ano_De_Nascimento
     Medico.append(Data_De_Nascimento)
 
-
     # Validação do sexo
     Limpar_Tela()
     print("3 - Incluir um novo médico:")
@@ -522,7 +563,6 @@ def Incluir_Novo_Medico(Medicos):
             Sexo_Valido = True
 
     Medico.append(Sexo_Do_Medico)
-
 
     # Validação da especialidade
     Limpar_Tela()
@@ -568,7 +608,6 @@ def Incluir_Novo_Medico(Medicos):
             
     Especialidade = Especialidade_formatada
     Medico.append(Especialidade)
-
 
     # Validação da universidade
     Limpar_Tela()
@@ -764,78 +803,97 @@ def Incluir_Novo_Medico(Medicos):
     return Medico
 
 def Main_Funcoes_Medico(Medicos):
-
-    # Sub menu médicos
     i = ""
     while i != "6":
-        Limpar_Tela()
-        print("Escolha uma das opções abaixo:")
-        print()
-        print("1 - Listar todos os médicos")
-        print("2 - Listar um médico")
-        print("3 - Incluir um novo médico")
-        print("4 - Alterar")
-        print("5 - Excluir")
-        print("6 - sair")
-        print()
-        i = input("Digite sua escolha: ")
+        i = Menu_Medicos()
+        
         if i == "1":
+            # ======================================LISTAR TODOS MÉDICOS================================
             Limpar_Tela()
             print("LISTA - MÉDICOS")
             Listar_Todos_Medicos(Medicos)
-            i = input("Fim da lista! Pressione ENTER para voltar ao submenu de médicos: ")
+            input("\nFim da lista! Pressione ENTER para voltar ao menu: ")
+            
         elif i == "2":
+            # ==================================BUSCAR UM MÉDICO==================================
             Limpar_Tela()
             print("--------Busca de Médicos--------")
             CRM = Validar_CRM(Medicos)
-            j = "" #váriavel p/ escolher a opção dentro de listar um
             achou_medico, indice_encontrado = Buscar_Medico(Medicos, CRM)
-            #Sub-menu para visualizar info sobre o médico
+            
             if achou_medico:
                 Nome_Medico = Medicos[indice_encontrado][1]
-                print(f"\nMédico {Nome_Medico} encontrado(a)!")
-                while j != "3": # Mudou para string
-                    Limpar_Tela()
-                    print("\nEscolha uma das opções:")
-                    print(f"1 - Listar todos os dados de {Nome_Medico}")
-                    print("2 - Listar uma informação do médico")
-                    print("3 - Sair deste menu") 
-                    j = input("Digite sua escolha : ").strip()
-                    while j == "1": 
+                j = ""
+                while j != "3": 
+                    j = Menu_Listar_Um_Medico(Nome_Medico)
+                    
+                    if j == "1": 
                         Limpar_Tela()
                         Listar_Todos_Dados_Medico(Medicos, indice_encontrado)                       
-                        j = input("Pressione enter para voltar...") 
-                        Limpar_Tela()
-                    while j == "2":
-                        Limpar_Tela()
-                        print(f"\nEscolha um dos dados de {Nome_Medico} que gostaria de vizualizar :")
-                        print("1 - CRM")
-                        print("2 - Nome")
-                        print("3 - Data de Nascimento")
-                        print("4 - Sexo")
-                        print("5 - Especialidade")
-                        print("6 - Universidade em que se formou")
-                        print("7 - E-mails")
-                        print("8 - Telefones")
-                        print("9 - Sair deste menu") 
-                        k = input("Digite sua escolha : ")                       
-                        j = Listar_Dado_Especifico_Medico(Medicos, indice_encontrado, k)             
+                        input("\nPressione ENTER para voltar...") 
+                        
+                    elif j == "2":
+                        k = ""
+                        while k != "9":
+                            k = Menu_Listar_Dado_Especifico_Medico(Nome_Medico)
+                            if k in ["1", "2", "3", "4", "5", "6", "7", "8"]:
+                                Limpar_Tela()
+                                Listar_Dado_Especifico_Medico(Medicos, indice_encontrado, k)             
+                                input("\nPressione ENTER para voltar...")
+                            elif k == "9":
+                                print("Voltando ao Menu...")
+                            else:
+                                input("\nOpção inválida! Pressione ENTER para tentar novamente...")
+                                
+                    elif j == "3":
+                        print("Voltando ao Menu...")
+                    else:
+                        input("\nOpção inválida! Pressione ENTER para tentar novamente...")
             else:
-                print("Médico não encontrado no sistema.")
-            i = input("Pressione ENTER para voltar ao submenu de médicos:")
+                input("\nMédico não encontrado no sistema. Pressione ENTER para voltar...")
+                
         elif i == "3":
+            # ==================================INSERIR NOVO MÉDICO==================================
+            Limpar_Tela()
             Medicos.append(Incluir_Novo_Medico(Medicos))
-            Limpar_Tela()
-            i = input("Cadastro do médico realizado com sucesso! dPressione ENTER para voltar ao submenu de médicos: ")
+            input("\nCadastro do médico realizado com sucesso! Pressione ENTER para voltar ao menu: ")
+            
         elif i == "4":
+            # ==================================ALTERAR DADOS==================================
             Limpar_Tela()
-            i = input("Cadastro do médico realizado com sucesso! dPressione ENTER para voltar ao submenu de médicos: ")
+            print("--------Busca de médicos p/ alteração de dados--------")
+            CRM = Validar_CRM(Medicos)
+            achou_medico, indice_encontrado = Buscar_Medico(Medicos, CRM)
+
+            if achou_medico:
+                Nome_Medico = Medicos[indice_encontrado][1]
+                j = ""
+                while j != "8":
+                    j = Menu_Alterar_Dados_Medico(Nome_Medico)
+                    if j in ["1", "2", "3", "4", "5", "6", "7"]:
+                        Limpar_Tela()
+                        # Quando for criar a função de alterar médico, basta chamá-la aqui como no paciente:
+                        # Alterar_Dado_Especifico_Medico(Medicos, indice_encontrado, j)
+                        print("Função de alterar dado específico do médico em desenvolvimento.")
+                        input("\nPressione ENTER para voltar...")
+                    elif j == "8":
+                        print("Voltando ao Menu...")
+                    else:
+                        input("\nOpção inválida! Pressione ENTER para tentar novamente...")
+            else:
+                input("\nMédico não encontrado no sistema. Pressione ENTER para voltar...") 
+            
         elif i == "5":
+            # ==================================EXCLUIR==================================
             Limpar_Tela()
-            i = input("Cadastro do médico realizado com sucesso! dPressione ENTER para voltar ao submenu de médicos: ") 
+            print("Função de excluir médico em desenvolvimento.")
+            input("\nPressione ENTER para voltar ao menu: ") 
+            
         elif i == "6":
+            # ==================================SAIR==================================
             Limpar_Tela()
             Gravar_Dados_Arquivo_Medicos(Medicos)
-            a = input("Pressione ENTER para voltar ao menu principal:")
+            input("\nDados gravados! Pressione ENTER para voltar ao menu principal: ")
+            
         else:
-            a = input("Opção inválida! Pressione ENTER para voltar ao submenu de médicos: ")
+            input("\nOpção inválida! Pressione ENTER para tentar novamente: ")

@@ -76,6 +76,120 @@ def Buscar_Paciente_Por_CPF(Pacientes, CPF):
             return True, Pacientes[i][1]
     return False, ""
 
+# =============================================== VALIDAÇÃO DATA/HORA =============================================== #
+
+def Validar_Data_Consulta():
+    Digitos = "0123456789"
+    # Validação do dia
+    Dia_Valido = False
+    while not Dia_Valido:
+        Dia = input("Digite o dia da consulta (1 a 31): ")
+        if len(Dia) < 1 or len(Dia) > 2:
+            print("Dia inválido! O dia deve conter 1 ou 2 dígitos!\n")
+        else:
+            Tem_Letra = False
+            for i in range(len(Dia)):
+                if Dia[i] not in Digitos:
+                    Tem_Letra = True
+            if Tem_Letra:
+                print("Dia inválido! Contém letras e só pode ter números!\n")
+            else:
+                Dia_Int = int(Dia)
+                if Dia_Int < 1 or Dia_Int > 31:
+                    print("Dia inválido! Os dias vão de 1 a 31!\n")
+                else:
+                    Dia_Valido = True
+    if len(Dia) == 1: Dia = "0" + Dia
+
+    # Validação do mês
+    Mes_Valido = False
+    while not Mes_Valido:
+        Mes = input("Digite o mês da consulta (1 a 12): ")
+        if len(Mes) < 1 or len(Mes) > 2:
+            print("Mês inválido! O mês deve conter 1 ou 2 dígitos!\n")
+        else:
+            Tem_Letra = False
+            for i in range(len(Mes)):
+                if Mes[i] not in Digitos:
+                    Tem_Letra = True
+            if Tem_Letra:
+                print("Mês inválido! Contém letras e só pode ter números!\n")
+            else:
+                Mes_Int = int(Mes)
+                if Mes_Int < 1 or Mes_Int > 12:
+                    print("Mês inválido! Os meses vão de 1 a 12!\n")
+                else:
+                    Mes_Valido = True
+    if len(Mes) == 1: Mes = "0" + Mes
+
+    # Validação do ano
+    Ano_Valido = False
+    while not Ano_Valido:
+        Ano = input("Digite o ano da consulta (ex: 2024): ")
+        if len(Ano) != 4:
+            print("Ano inválido! O ano deve conter exatamente 4 dígitos!\n")
+        else:
+            Tem_Letra = False
+            for i in range(len(Ano)):
+                if Ano[i] not in Digitos:
+                    Tem_Letra = True
+            if Tem_Letra:
+                print("Ano inválido! Contém letras e só pode ter números!\n")
+            else:
+                Ano_Int = int(Ano)
+                if Ano_Int < 1900:
+                    print("Ano inválido! Digite um ano válido (acima de 1900)!\n")
+                else:
+                    Ano_Valido = True
+
+    return Dia + "/" + Mes + "/" + Ano
+
+def Validar_Hora_Consulta():
+    Digitos = "0123456789"
+    # Validação da Hora
+    Hora_Valida = False
+    while not Hora_Valida:
+        Hora = input("Digite a hora da consulta (0 a 23): ")
+        if len(Hora) < 1 or len(Hora) > 2:
+            print("Hora inválida! A hora deve conter 1 ou 2 dígitos!\n")
+        else:
+            Tem_Letra = False
+            for i in range(len(Hora)):
+                if Hora[i] not in Digitos:
+                    Tem_Letra = True
+            if Tem_Letra:
+                print("Hora inválida! Contém letras e só pode ter números!\n")
+            else:
+                Hora_Int = int(Hora)
+                if Hora_Int < 0 or Hora_Int > 23:
+                    print("Hora inválida! As horas vão de 0 a 23!\n")
+                else:
+                    Hora_Valida = True
+    if len(Hora) == 1: Hora = "0" + Hora
+
+    # Validação dos Minutos
+    Min_Valido = False
+    while not Min_Valido:
+        Min = input("Digite os minutos da consulta (0 a 59): ")
+        if len(Min) < 1 or len(Min) > 2:
+            print("Minuto inválido! Os minutos devem conter 1 ou 2 dígitos!\n")
+        else:
+            Tem_Letra = False
+            for i in range(len(Min)):
+                if Min[i] not in Digitos:
+                    Tem_Letra = True
+            if Tem_Letra:
+                print("Minuto inválido! Contém letras e só pode ter números!\n")
+            else:
+                Min_Int = int(Min)
+                if Min_Int < 0 or Min_Int > 59:
+                    print("Minuto inválido! Os minutos vão de 0 a 59!\n")
+                else:
+                    Min_Valido = True
+    if len(Min) == 1: Min = "0" + Min
+
+    return Hora + ":" + Min
+
 # =============================================== 1 - LISTAR TODAS CONSULTAS =============================================== #
 
 def Listar_Todas_Consultas(Consultas):
@@ -158,18 +272,20 @@ def Listar_Todos_Dados_Consulta(Consultas, indice, Medicos, Pacientes):
 
     print(f"CONSULTA 0{1+indice}")
     print("┌" + "─"*32 + " INFO. GERAIS " + "─"*37 + "┐")
-    print(f"│ Médico: {nome_med} (CRM: {CRM}){' '*max(0, 56 - len(nome_med) - len(CRM))} │")
-    print(f"│ Paciente: {nome_pac} (CPF: {CPF}){' '*max(0, 51 - len(nome_pac) - len(CPF))} │")
-    print(f"│ Data: {Data:<76} │")
-    print(f"│ Hora: {Hora:<76} │")
-    print(f"│ Diagnóstico: {Diagnostico:<69} │")
+    print(f"│ Médico: {nome_med:<73} │")
+    print(f"│ CRM: {CRM:<76} │")
+    print(f"│ Paciente: {nome_pac:<71} │")
+    print(f"│ CPF: {CPF:<76} │")
+    print(f"│ Data: {Data:<75} │")
+    print(f"│ Hora: {Hora:<75} │")
+    print(f"│ Diagnóstico: {Diagnostico:<68} │")
     print("└" + "─"*83 + "┘\n")
 
     print("┌" + "─"*34 + " MEDICAMENTOS " + "─"*35 + "┐")
     for k in range(len(Medicamentos)):
         texto_med = f"{k+1}° Medicamento: {Medicamentos[k]}"
         print(f"│ {texto_med:<81} │")
-    print("└" + "─"*83 + "┘\n") 
+    print("└" + "─"*83 + "┘\n")
     
 # =============================================== 3 - INSERIR CONSULTA =============================================== #
 
@@ -219,28 +335,16 @@ def Incluir_Nova_Consulta(Consultas, Medicos, Pacientes):
 
     # Validação da Data
     print("-------------------------Data da Consulta-----------------------------")
-    Data_Valida = False
-    while not Data_Valida:
-        Data = input("Digite a data da consulta (DD/MM/AAAA): ")
-        if len(Data) != 10 or Data[2] != '/' or Data[5] != '/':
-            print("Formato de data inválido! Use DD/MM/AAAA.\n")
-        else:
-            Data_Valida = True
+    Data = Validar_Data_Consulta()
     Consulta.append(Data)
 
     # Validação da Hora
     print("-------------------------Hora da Consulta-----------------------------")
-    Hora_Valida = False
-    while not Hora_Valida:
-        Hora = input("Digite a hora da consulta (HH:MM): ")
-        if len(Hora) != 5 or Hora[2] != ':':
-            print("Formato de hora inválido! Use HH:MM.\n")
-        else:
-            Hora_Valida = True
+    Hora = Validar_Hora_Consulta()
     
     # Checagem de Duplicidade (Chaves Compostas)
     if Consulta_Duplicada(Consultas, CRM, CPF_Formatado, Data, Hora):
-        print("ERRO: Já existe uma consulta cadastrada para este Médico e Paciente nesta mesma Data e Hora!\n")
+        print("\nERRO: Já existe uma consulta cadastrada para este Médico e Paciente nesta mesma Data e Hora!\n")
         return None
         
     Consulta.append(Hora)
@@ -288,75 +392,90 @@ def Incluir_Nova_Consulta(Consultas, Medicos, Pacientes):
 
 # =============================================== 4 - ALTERAR CONSULTA =============================================== #
 
-def Alterar_Consulta(Consultas, indice):
-    Limpar_Tela()
+def Alterar_Consulta(Consultas, indice, Medicos, Pacientes):
     CRM = Consultas[indice][0]
     CPF = Consultas[indice][1]
     Data = Consultas[indice][2]
     Hora = Consultas[indice][3]
     
-    print("___________________________________________________________________________________")
-    print(f"\nALTERANDO CONSULTA: Médico {CRM} | Paciente {CPF} | {Data} às {Hora}")
-    print()
-    print("O que deseja alterar?")
-    print("1 - Diagnóstico")
-    print("2 - Medicamentos (Sobrescrever todos)")
-    print("3 - Cancelar")
-    escolha = input("Digite sua escolha: ")
+    achou_med, nome_med = Buscar_Medico_Por_CRM(Medicos, CRM)
+    achou_pac, nome_pac = Buscar_Paciente_Por_CPF(Pacientes, CPF)
 
-    if escolha == "1":
-        Diag_Valido = False
-        while not Diag_Valido:
-            Diagnostico = input("Digite o novo diagnóstico: ")
-            if len(Diagnostico.strip()) == 0:
-                print("O diagnóstico não pode ficar em branco!\n")
-            else:
-                Consultas[indice][4] = Diagnostico.capitalize()
-                Diag_Valido = True
-        print("\nDiagnóstico atualizado com sucesso!")
-        
-    elif escolha == "2":
-        Medicamentos_Da_Consulta = []
-        Continuar_Med = True
-        while Continuar_Med:
-            Med_Valido = False
-            while not Med_Valido:
-                Medicamento = input("Digite o nome do medicamento receitado: ")
-                if len(Medicamento.strip()) == 0:
-                    print("O medicamento não pode ficar em branco!\n")
+    if not achou_med: nome_med = "Médico não encontrado"
+    if not achou_pac: nome_pac = "Paciente não encontrado"
+
+    escolha = ""
+    while escolha != "3":
+        Limpar_Tela()
+        print("___________________________________________________________________________________")
+        print(f"\nALTERANDO CONSULTA: Médico(a) {nome_med} | Paciente {nome_pac} | {Data} às {Hora}")
+        print()
+        print("O que deseja alterar?")
+        print("1 - Diagnóstico")
+        print("2 - Medicamentos (Sobrescrever todos)")
+        print("3 - Voltar / Concluir alterações")
+        escolha = input("Digite sua escolha: ")
+
+        if escolha == "1":
+            Diag_Valido = False
+            while not Diag_Valido:
+                Diagnostico = input("Digite o novo diagnóstico: ")
+                if len(Diagnostico.strip()) == 0:
+                    print("O diagnóstico não pode ficar em branco!\n")
                 else:
-                    Medicamentos_Da_Consulta.append(Medicamento.title())
-                    Med_Valido = True
+                    Consultas[indice][4] = Diagnostico.capitalize()
+                    Diag_Valido = True
+            print("\nDiagnóstico atualizado com sucesso!")
+            input("\nPressione Enter para continuar... ")
+            
+        elif escolha == "2":
+            Medicamentos_Da_Consulta = []
+            Continuar_Med = True
+            while Continuar_Med:
+                Med_Valido = False
+                while not Med_Valido:
+                    Medicamento = input("Digite o nome do medicamento receitado: ")
+                    if len(Medicamento.strip()) == 0:
+                        print("O medicamento não pode ficar em branco!\n")
+                    else:
+                        Medicamentos_Da_Consulta.append(Medicamento.title())
+                        Med_Valido = True
 
-            Opcao_Valida = False
-            while not Opcao_Valida:
-                Opcao = input("Deseja adicionar mais um medicamento? (S para Sim / N para Não): ").upper()
-                if Opcao == "S":
-                    Opcao_Valida = True
-                elif Opcao == "N":
-                    Opcao_Valida = True
-                    Continuar_Med = False
-                else:
-                    print("Opção inválida! Digite apenas S ou N.\n")
-        Consultas[indice][5] = Medicamentos_Da_Consulta
-        print("\nLista de medicamentos atualizada com sucesso!")
+                Opcao_Valida = False
+                while not Opcao_Valida:
+                    Opcao = input("Deseja adicionar mais um medicamento? (S para Sim / N para Não): ").upper()
+                    if Opcao == "S":
+                        Opcao_Valida = True
+                    elif Opcao == "N":
+                        Opcao_Valida = True
+                        Continuar_Med = False
+                    else:
+                        print("Opção inválida! Digite apenas S ou N.\n")
+            Consultas[indice][5] = Medicamentos_Da_Consulta
+            print("\nLista de medicamentos atualizada com sucesso!")
+            input("\nPressione Enter para continuar... ")
 
-    elif escolha == "3":
-        print("\nAlteração cancelada.")
-    else:
-        print("\nOpção inválida.")
-        
-    input("\nPressione Enter para continuar... ")
+        elif escolha == "3":
+            print("\nVoltando ao menu principal de consultas...")
+        else:
+            print("\nOpção inválida.")
+            input("\nPressione Enter para continuar... ")
 
 # =============================================== 5 - EXCLUIR CONSULTA =============================================== #
 
-def Excluir_Consulta(Consultas, indice):
+def Excluir_Consulta(Consultas, indice, Medicos, Pacientes):
     CRM = Consultas[indice][0]
     CPF = Consultas[indice][1]
     Data = Consultas[indice][2]
     
+    achou_med, nome_med = Buscar_Medico_Por_CRM(Medicos, CRM)
+    achou_pac, nome_pac = Buscar_Paciente_Por_CPF(Pacientes, CPF)
+
+    if not achou_med: nome_med = "Médico não encontrado"
+    if not achou_pac: nome_pac = "Paciente não encontrado"
+
     print("___________________________________________________________________________________")
-    print(f"\nVocê está prestes a excluir a consulta do Médico {CRM} com Paciente {CPF} do dia {Data}.")
+    print(f"\nVocê está prestes a excluir a consulta do Médico(a) {nome_med} com o Paciente {nome_pac} do dia {Data}.")
     confirmacao = input("Tem certeza que deseja EXCLUIR? (S para Sim / N para Não): ").upper()
     
     if confirmacao == "S":
@@ -367,10 +486,38 @@ def Excluir_Consulta(Consultas, indice):
     
     input("\nPressione Enter para continuar... ")
 
+# =============================================== COLETA DE DADOS PARA BUSCA =============================================== #
+
+def Coletar_Dados_Busca_Consulta(Medicos, Pacientes):
+    # Coleta e Valida o Médico
+    CRM = input("Digite o CRM do Médico: ")
+    achou_med, nome_med = Buscar_Medico_Por_CRM(Medicos, CRM)
+    if achou_med:
+        print(f"-> Médico(a) selecionado(a): {nome_med}")
+    else:
+        print("-> Aviso: Médico não encontrado no cadastro.")
+
+    # Coleta e Valida o Paciente
+    print("\n---- CPF do Paciente ----")
+    CPF = Formatar_CPF(Validar_e_Obter_CPF())
+    achou_pac, nome_pac = Buscar_Paciente_Por_CPF(Pacientes, CPF)
+    if achou_pac:
+        print(f"-> Paciente selecionado: {nome_pac}")
+    else:
+        print("-> Aviso: Paciente não encontrado no cadastro.")
+
+    print("\n---- Data da Consulta ----")
+    Data = Validar_Data_Consulta()
+    
+    print("\n---- Hora da Consulta ----")
+    Hora = Validar_Hora_Consulta()
+    
+    return CRM, CPF, Data, Hora
+
 # =============================================== MAIN - SUBMENU =============================================== #
 
-def Main_Funcoes_Consulta(Medicos, Pacientes):
-    Consultas = []
+def Main_Funcoes_Consulta(Medicos, Pacientes, Consultas):
+
     Carregar_Dados_Arquivo_Consultas(Consultas)
 
     i = ""
@@ -396,10 +543,9 @@ def Main_Funcoes_Consulta(Medicos, Pacientes):
         elif i == "2":
             Limpar_Tela()
             print("--------Busca de Consultas--------")
-            CRM = input("Digite o CRM do Médico: ")
-            CPF = Formatar_CPF(Validar_e_Obter_CPF())
-            Data = input("Digite a Data da consulta (DD/MM/AAAA): ")
-            Hora = input("Digite a Hora da consulta (HH:MM): ")
+            
+            # Usando a nova função para coletar e exibir os nomes instantaneamente
+            CRM, CPF, Data, Hora = Coletar_Dados_Busca_Consulta(Medicos, Pacientes)
             
             achou_consulta, indice_encontrado = Buscar_Consulta(Consultas, CRM, CPF, Data, Hora)
             
@@ -421,15 +567,13 @@ def Main_Funcoes_Consulta(Medicos, Pacientes):
         elif i == "4":
             Limpar_Tela()
             print("--------Alterar Consulta--------")
-            CRM = input("Digite o CRM do Médico: ")
-            CPF = Formatar_CPF(Validar_e_Obter_CPF())
-            Data = input("Digite a Data da consulta (DD/MM/AAAA): ")
-            Hora = input("Digite a Hora da consulta (HH:MM): ")
+            
+            CRM, CPF, Data, Hora = Coletar_Dados_Busca_Consulta(Medicos, Pacientes)
             
             achou_consulta, indice_encontrado = Buscar_Consulta(Consultas, CRM, CPF, Data, Hora)
             
             if achou_consulta:
-                Alterar_Consulta(Consultas, indice_encontrado)
+                Alterar_Consulta(Consultas, indice_encontrado, Medicos, Pacientes)
             else:
                 print("\nConsulta não encontrada no sistema com os dados informados.")
                 input("\nPressione ENTER para voltar ao submenu de consultas:")
@@ -437,15 +581,13 @@ def Main_Funcoes_Consulta(Medicos, Pacientes):
         elif i == "5":
             Limpar_Tela()
             print("--------Excluir Consulta--------")
-            CRM = input("Digite o CRM do Médico: ")
-            CPF = Formatar_CPF(Validar_e_Obter_CPF())
-            Data = input("Digite a Data da consulta (DD/MM/AAAA): ")
-            Hora = input("Digite a Hora da consulta (HH:MM): ")
+            
+            CRM, CPF, Data, Hora = Coletar_Dados_Busca_Consulta(Medicos, Pacientes)
             
             achou_consulta, indice_encontrado = Buscar_Consulta(Consultas, CRM, CPF, Data, Hora)
             
             if achou_consulta:
-                Excluir_Consulta(Consultas, indice_encontrado)
+                Excluir_Consulta(Consultas, indice_encontrado, Medicos, Pacientes)
             else:
                 print("\nConsulta não encontrada no sistema com os dados informados.")
                 input("\nPressione ENTER para voltar ao submenu de consultas:")
