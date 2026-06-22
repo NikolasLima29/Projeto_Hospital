@@ -2,7 +2,7 @@ import os
 
 from Funcoes_Medico import Carregar_Dados_Arquivo_Medicos, Main_Funcoes_Medico
 from Funcoes_Paciente import Carregar_Dados_Arquivo_Pacientes, Main_Funcoes_Pacientes
-from Funcoes_Consultas import Main_Funcoes_Consulta
+from Funcoes_Consultas import Carregar_Dados_Arquivo_Consultas, Main_Funcoes_Consulta
 from Funcoes_Relatorios import Main_Funcoes_Relatorios
 
 def Limpar_Tela():
@@ -28,6 +28,7 @@ def Main():
 
     Carregar_Dados_Arquivo_Medicos(Medicos)
     Carregar_Dados_Arquivo_Pacientes(Pacientes)
+    Carregar_Dados_Arquivo_Consultas(Consultas)
 
     i = ""
     while i != "5":
