@@ -994,8 +994,93 @@ def Alterar_Dado_Especifico_Paciente(Pacientes, indice, dado):
     else:
         Limpar_Tela()
         print("Opção inválida. Digite um número entre 1 e 7.")
-        input("\nPressione Enter para continuar... ")
-    
+        input("\nPressione Enter para continuar... ") # Adicionado para dar tempo de ler o erro
+
+
+def Deletar_Dado_Paciente(Pacientes, indice, opcao):
+    Nome_Paciente = Pacientes[indice][1]
+
+    if opcao == "1":
+        Limpar_Tela()
+        print(f"Tem certeza que deseja excluir o paciente {Nome_Paciente}?")
+        confirmacao = input("Digite S para confirmar ou N para cancelar: ").strip().upper()
+
+        if confirmacao == "S":
+            Limpar_Tela()
+            Pacientes.pop(indice)
+            print(f"Paciente {Nome_Paciente} excluído com sucesso!")
+            input("Pressione enter para voltar ao menu principal...")
+            Limpar_Tela()
+            return "1"
+        else:
+            Limpar_Tela()
+            print("Exclusão cancelada.")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return "5"
+
+    elif opcao == "2":
+        if len(Pacientes[indice][5]) == 1:
+            Limpar_Tela()
+            print("Não é possível excluir o e-mail porque o paciente possui apenas um e-mail cadastrado.")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return "5"
+
+        Email_Escolhido = Escolher_Email_Especifico(Pacientes, indice)
+        Limpar_Tela()
+        print(f"O e-mail escolhido para exclusão foi: {Pacientes[indice][5][Email_Escolhido - 1]}")
+        confirmacao = input("Digite S para confirmar ou N para cancelar: ").strip().upper()
+
+        if confirmacao == "S":
+            Limpar_Tela()
+            Pacientes[indice][5].pop(Email_Escolhido - 1)
+            print("E-mail excluído com sucesso!")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return "5"
+        else:
+            Limpar_Tela()
+            print("Exclusão cancelada.")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return "5"
+
+    elif opcao == "3":
+        if len(Pacientes[indice][6]) == 1:
+            Limpar_Tela()
+            print("Não é possível excluir o telefone porque o paciente possui apenas um telefone cadastrado.")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return "5"
+
+        Telefone_Escolhido = Escolher_Telefone_Especifico(Pacientes, indice)
+        Limpar_Tela()
+        print(f"O telefone escolhido para exclusão foi: {Pacientes[indice][6][Telefone_Escolhido - 1]}")
+        confirmacao = input("Digite S para confirmar ou N para cancelar: ").strip().upper()
+
+        if confirmacao == "S":
+            Limpar_Tela()
+            Pacientes[indice][6].pop(Telefone_Escolhido - 1)
+            print("Telefone excluído com sucesso!")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return "5"
+        else:
+            Limpar_Tela()
+            print("Exclusão cancelada.")
+            input("Pressione enter para voltar...")
+            Limpar_Tela()
+            return "5"
+
+    else:
+        Limpar_Tela()
+        print("Opção inválida.")
+        input("Pressione enter para voltar...")
+        Limpar_Tela()
+        return "5"
+
+
 def Main_Funcoes_Pacientes(Pacientes):
     i = ""
     while i != "6":
@@ -1071,10 +1156,65 @@ def Main_Funcoes_Pacientes(Pacientes):
         elif i == "5":
             # ==================================EXCLUIR==================================
             Limpar_Tela()
-            print("Função de excluir paciente em desenvolvimento.")
-            input("\nPressione ENTER para voltar ao menu: ")
-        elif i == "6":
-            # ==================================SAIR==================================
+                
+                
+            
+            i = input(
+                (
+                    "Fim do exercício, digite 4 para refazer o exercício ou enter para voltar ao menu "
+                )
+            )
+
+        while i == "5":
+            Limpar_Tela()
+
+            print("--------Busca de pacientes p/ exclusão--------")
+            CPF = Validar_e_Obter_CPF()
+            CPF = Formatar_CPF(CPF)
+
+            achou_paciente, indice_encontrado = Buscar_Paciente(Pacientes, CPF)
+
+            if achou_paciente:
+                Nome_Paciente = Pacientes[indice_encontrado][1]
+                Limpar_Tela()
+                print(f"Paciente {Nome_Paciente} encontrado/a!")
+
+                submenu_excluir = True
+                while submenu_excluir:
+                    print("\nEscolha uma opção:")
+                    print("1 - Excluir o paciente")
+                    print("2 - Excluir um e-mail do paciente")
+                    print("3 - Excluir um telefone do paciente")
+                    print("4 - Sair deste menu")
+                    opcao_exclusao = input("Digite sua escolha: ").strip()
+
+                    if opcao_exclusao == "4":
+                        Limpar_Tela()
+                        submenu_excluir = False
+                    else:
+                        resultado = Deletar_Dado_Paciente(Pacientes, indice_encontrado, opcao_exclusao)
+
+                        if resultado == "1":
+                            i = "1"
+                            submenu_excluir = False
+                        elif resultado == "5":
+                            i = "5"
+                            # mantém o submenu ativo para continuar a exclusão
+                            Limpar_Tela()
+                        else:
+                            Limpar_Tela()
+
+                if i == "5":
+                    # se o usuário saiu do submenu sem apagar o paciente, volta ao menu principal
+                    i = "1"
+            else:
+                print("Paciente não encontrado no sistema.")
+                input("Pressione enter para voltar...")
+                i = "1"
+
+            Limpar_Tela()
+            
+        if i == "6":
             Limpar_Tela()
             Gravar_Dados_Arquivo_Pacientes(Pacientes)
             input("\nDados gravados! Pressione ENTER para voltar ao menu principal: ")
